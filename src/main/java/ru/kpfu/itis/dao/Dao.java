@@ -7,7 +7,7 @@ public interface Dao<T> {
 
     public List<T> getAll();
 
-    public void add(T item);
+    public void create(T item);
 
     public void update(int id, T newItem);
 
