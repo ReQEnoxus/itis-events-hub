@@ -1,4 +1,4 @@
-package ru.kpfu.itis;
+package ru.kpfu.itis.view;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
