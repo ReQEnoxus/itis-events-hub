@@ -11,7 +11,7 @@ public interface UserDao {
 
     public void create(User item);
 
-    public void update(int id, User newItem);
+    public void update(String login, User newItem);
 
-    public void delete(int id);
+    public void delete(String login);
 }
