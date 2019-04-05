@@ -5,13 +5,13 @@ import ru.kpfu.itis.entity.User;
 import java.util.List;
 
 public interface UserDao {
-    public User get(String login);
+    User get(String login);
 
-    public List<User> getAll();
+    List<User> getAll();
 
-    public void create(User item);
+    void create(User item);
 
-    public void update(String login, User newItem);
+    void update(String login, User newItem);
 
-    public void delete(String login);
+    void delete(String login);
 }
