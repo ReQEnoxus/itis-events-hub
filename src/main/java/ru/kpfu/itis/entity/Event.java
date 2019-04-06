@@ -12,8 +12,17 @@ public class Event {
     private Date date;
     private User host;
     private int id;
+    private boolean active;
 
     public Event() {
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public int getId() {
