@@ -7,7 +7,7 @@ import ru.kpfu.itis.entity.User;
 
 public class AuthManager {
     private static User emptyUser = new User();
-    private static UserDao userDao;
+    private static UserDao userDao = null;
 
     static {
         emptyUser.setRole(Role.GUEST);
