@@ -9,6 +9,8 @@ public interface EventDao {
 
     List<Event> getAll();
 
+    List<Event> getActive();
+
     void create(Event item);
 
     void update(int id, Event newItem);
