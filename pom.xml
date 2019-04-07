@@ -81,6 +81,22 @@
             <artifactId>vaadin-app-layout-flow</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-dialog-flow</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.flowingcode.addons.carousel</groupId>
+            <artifactId>carousel-addon</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-date-picker-flow</artifactId>
+        </dependency>
+
         <!-- Added to provide logging output as Flow uses -->
         <!-- the unbound SLF4J no-operation (NOP) logger implementation -->
         <dependency>
