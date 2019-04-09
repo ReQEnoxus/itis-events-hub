@@ -1,6 +1,5 @@
 package ru.kpfu.itis.entity;
 
-import java.util.Date;
 import java.util.List;
 
 public class Event {
@@ -9,10 +8,14 @@ public class Event {
     private List<User> participants;
     private int prize;
     private int capacity;
-    private Date date;
     private User host;
     private int id;
     private boolean active;
+    private String place;
+    private String timeStart;
+    private String timeEnd;
+    private String dateStart;
+    private String dateEnd;
 
     public Event() {
     }
@@ -23,6 +26,46 @@ public class Event {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public String getTimeStart() {
+        return timeStart;
+    }
+
+    public void setTimeStart(String timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public String getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(String timeEnd) {
+        this.timeEnd = timeEnd;
+    }
+
+    public String getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(String dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public String getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(String dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public int getId() {
@@ -79,13 +122,5 @@ public class Event {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }
