@@ -94,7 +94,13 @@ public class EventInfo {
         timeInfo.add(time);
         timeInfo.add(event.getTimeStart() + " - " + event.getTimeEnd());
         volunteersInfo.add(volunteers);
-        volunteersInfo.add(event.getCapacity() + " волонтера");
+        if (event.getCapacity() == 1) {
+            volunteersInfo.add(event.getCapacity() + " волонтер");
+        }
+        else if (event.getCapacity() > 1 && event.getCapacity() < 5) {
+            volunteersInfo.add(event.getCapacity()+ " волонтера");
+        }
+        else volunteersInfo.add(event.getCapacity() + " волонтеров");
         prizesInfo.add(prizes);
         if (event.getPrize() == 1) {
             prizesInfo.add(event.getPrize() + " балл");
