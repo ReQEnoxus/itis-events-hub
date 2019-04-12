@@ -21,19 +21,16 @@ import java.util.List;
 
 public class EventInfo {
 
-    private Event event;
+    private static Event event;
 
-    public EventInfo(Event event) {
-        this.event = event;
-    }
-
-    public void openWindow() {
+    public static void openWindow(Event eventToShow) {
+        event = eventToShow;
         if (event.isActive()) {
             openWindowActive();
         } else openWindowEnded();
     }
 
-    private void openWindowEnded() {
+    private static void openWindowEnded() {
 
         H1 label = new H1("Мероприятие завершено");
         label.getStyle().set("font-size", "-webkit-xxx-large");
@@ -48,7 +45,7 @@ public class EventInfo {
 
     }
 
-    private void openWindowActive() {
+    private static void openWindowActive() {
 
         VerticalLayout panelContent = new VerticalLayout();
         Text description = new Text(event.getDescription());
@@ -59,16 +56,11 @@ public class EventInfo {
         VerticalLayout labelLayout = new VerticalLayout(label);
 
         label.getStyle().set("font-family", "Impact");
-        label.getStyle().set("align-self", "center");
         label.getStyle().set("fontSize", "32px");
 
 
         Dialog dialog = new Dialog();
 
-        Button exitButton = new Button("Закрыть");
-        exitButton.addClickListener(e -> {
-            dialog.close();
-        });
         HorizontalLayout placeInfo = new HorizontalLayout();
         HorizontalLayout timeInfo = new HorizontalLayout();
         HorizontalLayout dateInfo = new HorizontalLayout();
@@ -104,7 +96,13 @@ public class EventInfo {
         volunteersInfo.add(volunteers);
         volunteersInfo.add(event.getCapacity() + " волонтера");
         prizesInfo.add(prizes);
-        prizesInfo.add(event.getPrize() + " балла");
+        if (event.getPrize() == 1) {
+            prizesInfo.add(event.getPrize() + " балл");
+        }
+        else if (event.getPrize() >1 && event.getPrize() < 5) {
+            prizesInfo.add(event.getPrize() + " балла");
+        }
+        else prizesInfo.add(event.getPrize() + " баллов");
         dialog.add(labelLayout);
         dialog.add(placeInfo, dateInfo, timeInfo, volunteersInfo, prizesInfo);
         dialog.add(new HorizontalLayout(panelContent));
@@ -121,9 +119,7 @@ public class EventInfo {
         user2.setLastname("Беляков");
         user2.setPatronymic("Олегович");
 
-        List<User> volunteerList = new ArrayList<>();
-        volunteerList.add(user1);
-        volunteerList.add(user2);
+        List<User> volunteerList = event.getParticipants();
 
         Grid<User> volunteerGrid = new Grid<>(User.class);
         volunteerGrid.setColumns("lastname", "name", "patronymic");
@@ -136,15 +132,9 @@ public class EventInfo {
         dialog.add(gridLayout);
         VerticalLayout buttonLayout = new VerticalLayout();
 
-        if (AuthManager.getCurrentUser().getRole().equals(Role.ADMIN) || AuthManager.getCurrentUser().getRole().equals(Role.VERIFIED)) {
+        if (AuthManager.getCurrentUser().getRole().equals(Role.ADMIN) || AuthManager.getCurrentUser() == event.getHost()) {
             Button endButton = new Button("Завершить");
             endButton.getStyle().set("color", "red");
-            endButton.addClickListener(e ->
-                    {
-                        dialog.close();
-                        event.setActive(false);
-                    }
-            );
             buttonLayout.add(endButton);
             dialog.add(buttonLayout);
         }
