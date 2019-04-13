@@ -55,7 +55,6 @@ public class EventInfo {
 
         VerticalLayout labelLayout = new VerticalLayout(label);
 
-        label.getStyle().set("font-family", "Blogger Sans");
         label.getStyle().set("font-weight", "bold");
         label.getStyle().set("fontSize", "32px");
 
