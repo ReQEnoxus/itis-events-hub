@@ -55,7 +55,8 @@ public class EventInfo {
 
         VerticalLayout labelLayout = new VerticalLayout(label);
 
-        label.getStyle().set("font-family", "Impact");
+        label.getStyle().set("font-family", "Blogger Sans");
+        label.getStyle().set("font-weight", "bold");
         label.getStyle().set("fontSize", "32px");
 
 
@@ -115,16 +116,6 @@ public class EventInfo {
         dialog.setWidth("600px");
         dialog.setHeight("650px");
 
-        User user1 = new User();
-        user1.setName("Азат");
-        user1.setLastname("Валиев");
-        user1.setPatronymic("Дамирович");
-
-        User user2 = new User();
-        user2.setName("Дмитрий");
-        user2.setLastname("Беляков");
-        user2.setPatronymic("Олегович");
-
         List<User> volunteerList = event.getParticipants();
 
         Grid<User> volunteerGrid = new Grid<>(User.class);
@@ -138,7 +129,7 @@ public class EventInfo {
         dialog.add(gridLayout);
         VerticalLayout buttonLayout = new VerticalLayout();
 
-        if (AuthManager.getCurrentUser().getRole().equals(Role.ADMIN) || AuthManager.getCurrentUser() == event.getHost()) {
+        if (AuthManager.getCurrentUser().getRole().equals(Role.ADMIN) || AuthManager.getCurrentUser().equals(event.getHost())) {
             Button endButton = new Button("Завершить");
             endButton.getStyle().set("color", "red");
             buttonLayout.add(endButton);
