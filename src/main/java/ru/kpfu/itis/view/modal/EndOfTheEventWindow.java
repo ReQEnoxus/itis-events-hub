@@ -1,4 +1,4 @@
-package ru.kpfu.itis.view.modal;
+﻿package ru.kpfu.itis.view.modal;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -31,20 +31,24 @@ public class EndOfTheEventWindow implements ComponentFactory<User> {
         this.dialog.setCloseOnOutsideClick(false);
     }
 
-    private FormLayout createEndOfTheEventComponents(Event event) {
+     private FormLayout createEndOfTheEventComponents(Event event) {
         FormLayout formLayout = new FormLayout();
-        formLayout.add("Проверьте присутствие участников на мероприятии");
-        if (event.getParticipants() != null) {
+        Div div = new Div();
+        div.setText("Проверьте присутствие участников на мероприятии");
+        formLayout.add(div);
+        if (event.getParticipants() != null && event.getParticipants().size() != 0) {
             for (User user : event.getParticipants()) {
                 formLayout.add(create(user));
             }
-            Button end = new Button("Завершить");
-            formLayout.add(end);
-            end.addClickListener(evt -> dialog.close());
-            return formLayout;
         } else {
-            throw new IllegalArgumentException();
+            Div d = new Div();
+            d.setText("На этом мероприятии не присутствовало ни одного участника");
+            formLayout.add(d);
         }
+        Button end = new Button("Завершить");
+        formLayout.add(end);
+        end.addClickListener(evt -> dialog.close());
+        return formLayout;
     }
 
     @Override
