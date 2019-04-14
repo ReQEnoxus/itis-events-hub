@@ -1,17 +1,14 @@
-﻿package ru.kpfu.itis.view.modal;
+package ru.kpfu.itis.view.modal;
 
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.html.Div;
 import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.entity.User;
-import ru.kpfu.itis.factory.ComponentFactory;
+import ru.kpfu.itis.factory.ComponentFactoryUserImpl;
 
-public class EndOfTheEventWindow implements ComponentFactory<User> {
+public class EndOfTheEventWindow extends ComponentFactoryUserImpl {
     private Dialog dialog;
 
     public Dialog getDialog() {
@@ -31,7 +28,7 @@ public class EndOfTheEventWindow implements ComponentFactory<User> {
         this.dialog.setCloseOnOutsideClick(false);
     }
 
-     private FormLayout createEndOfTheEventComponents(Event event) {
+    private FormLayout createEndOfTheEventComponents(Event event) {
         FormLayout formLayout = new FormLayout();
         Div div = new Div();
         div.setText("Проверьте присутствие участников на мероприятии");
@@ -49,20 +46,5 @@ public class EndOfTheEventWindow implements ComponentFactory<User> {
         formLayout.add(end);
         end.addClickListener(evt -> dialog.close());
         return formLayout;
-    }
-
-    @Override
-    public HorizontalLayout create(User user) {
-        HorizontalLayout userLayout = new HorizontalLayout();
-        userLayout.setAlignItems(FlexComponent.Alignment.END);
-        userLayout.setWidth("100%");
-        TextField userData = new TextField();
-        userData.setValue(user.getName() + " " + user.getLastname());
-        userData.setEnabled(false);
-        Checkbox confirmUser = new Checkbox();
-        confirmUser.setValue(true);
-        userLayout.add(userData, confirmUser);
-        userLayout.expand(userData);
-        return userLayout;
     }
 }
