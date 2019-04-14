@@ -1,4 +1,4 @@
-package ru.kpfu.itis.modal;
+package ru.kpfu.itis.view.modal;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
