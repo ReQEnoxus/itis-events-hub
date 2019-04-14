@@ -1,13 +1,13 @@
-package com.vaadin.example.modal;
+package ru.kpfu.itis.view.modal;
 
-import com.vaadin.example.entity.Event;
-import com.vaadin.example.entity.User;
-import com.vaadin.example.factory.ComponentFactory;
-import com.vaadin.example.factory.ComponentFactoryEditEventImpl;
-import com.vaadin.example.factory.ComponentFactoryEditUserImpl;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import ru.kpfu.itis.entity.Event;
+import ru.kpfu.itis.entity.User;
+import ru.kpfu.itis.factory.ComponentFactory;
+import ru.kpfu.itis.factory.ComponentFactoryEditEventImpl;
+import ru.kpfu.itis.factory.ComponentFactoryEditUserImpl;
 
 public class EditElementOfDatabaseWindow {
     private Dialog dialog;
