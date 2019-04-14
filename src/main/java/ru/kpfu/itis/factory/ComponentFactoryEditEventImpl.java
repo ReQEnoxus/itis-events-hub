@@ -1,4 +1,4 @@
-package ru.kpfu.itis.factory;
+﻿package ru.kpfu.itis.factory;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Div;
@@ -31,7 +31,7 @@ public class ComponentFactoryEditEventImpl implements ComponentFactory<Event> {
         if (entity.getParticipants() != null && entity.getParticipants().size() != 0) {
             for (User user : entity.getParticipants()) {
                 TextField userData = new TextField();
-                userData.setValue(user.getName() + " " + user.getLastname());
+                userData.setValue(user.getName() + " " + user.getLastname() + " " + user.getPatronymic);
                 userData.setAutoselect(true);
                 userData.setWidth("100%");
                 eventLayout.add(userData);
@@ -52,7 +52,7 @@ public class ComponentFactoryEditEventImpl implements ComponentFactory<Event> {
         capacityField.setWidth("100%");
         eventLayout.add(capacityField);
         TextField hostField = new TextField("Создатель");
-        hostField.setValue(entity.getHost().getName() + " " + entity.getHost().getLastname());
+        hostField.setValue(entity.getHost().getName() + " " + entity.getHost().getLastname() + " " + entity.getHost().getPatronymic);
         hostField.setAutoselect(true);
         hostField.setWidth("100%");
         eventLayout.add(hostField);
