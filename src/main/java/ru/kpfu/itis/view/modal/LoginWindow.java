@@ -9,12 +9,8 @@ import com.vaadin.flow.component.textfield.TextField;
 public class LoginWindow {
     private Dialog dialog;
 
-    public Dialog getDialog() {
-        return dialog;
-    }
-
-    public static void openLoginWindow(LoginWindow loginWindow) {
-        loginWindow.getDialog().open();
+    public static void openLoginWindow() {
+        new LoginWindow().dialog.open();
     }
 
     public LoginWindow() {
