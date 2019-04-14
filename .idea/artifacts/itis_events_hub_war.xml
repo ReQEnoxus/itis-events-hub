@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="itis-events-hub:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>itis-events-hub</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="itis-events-hub-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="itis-events-hub:war exploded" />
+    </root>
+  </artifact>
+</component>

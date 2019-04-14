@@ -24,7 +24,7 @@ public class ComponentFactoryEditUserImpl implements ComponentFactory<User> {
         lastNameField.setAutoselect(true);
         lastNameField.setWidth("100%");
         userLayout.add(lastNameField);
-        TextField patronymicField = new TextField("Patronymic");
+        TextField patronymicField = new TextField("Отчество");
         patronymicField.setValue(entity.getPatronymic() + "");
         patronymicField.setAutoselect(true);
         patronymicField.setWidth("100%");
