@@ -6,9 +6,10 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.entity.User;
+import ru.kpfu.itis.factory.ComponentFactory;
 import ru.kpfu.itis.factory.ComponentFactoryUserImpl;
 
-public class EndOfTheEventWindow extends ComponentFactoryUserImpl {
+public class EndOfTheEventWindow {
     private Dialog dialog;
 
     public Dialog getDialog() {
@@ -34,8 +35,9 @@ public class EndOfTheEventWindow extends ComponentFactoryUserImpl {
         div.setText("Проверьте присутствие участников на мероприятии");
         formLayout.add(div);
         if (event.getParticipants() != null && event.getParticipants().size() != 0) {
+            ComponentFactory<User> factory = new ComponentFactoryUserImpl();
             for (User user : event.getParticipants()) {
-                formLayout.add(create(user));
+                formLayout.add(factory.create(user));
             }
         } else {
             Div d = new Div();
