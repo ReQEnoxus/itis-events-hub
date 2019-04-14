@@ -1,0 +1,54 @@
+package com.vaadin.example.modal;
+
+import com.vaadin.example.entity.Event;
+import com.vaadin.example.entity.User;
+import com.vaadin.example.factory.ComponentFactory;
+import com.vaadin.example.factory.ComponentFactoryEditEventImpl;
+import com.vaadin.example.factory.ComponentFactoryEditUserImpl;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+
+public class EditElementOfDatabaseWindow {
+    private Dialog dialog;
+    private ComponentFactory<Event> factoryEvent = new ComponentFactoryEditEventImpl();
+    private ComponentFactory<User> factoryUser = new ComponentFactoryEditUserImpl();
+
+    public Dialog getDialog() {
+        return dialog;
+    }
+
+    public static void openEditElementOfDatabaseWindow(Event event) {
+        EditElementOfDatabaseWindow element = new EditElementOfDatabaseWindow(event);
+        element.getDialog().open();
+    }
+
+    public EditElementOfDatabaseWindow(Event event) {
+        this.dialog = new Dialog();
+        VerticalLayout formLayout = (VerticalLayout) factoryEvent.create(event);
+        Button end = new Button("Сохранить");
+        formLayout.add(end);
+        end.addClickListener(evt -> dialog.close());
+        this.dialog.add(formLayout);
+        this.dialog.setWidth("300px");
+        this.dialog.setHeight("500px");
+        this.dialog.setCloseOnOutsideClick(false);
+    }
+
+    public static void openEditElementOfDatabaseWindow(User user) {
+        EditElementOfDatabaseWindow element = new EditElementOfDatabaseWindow(user);
+        element.getDialog().open();
+    }
+
+    public EditElementOfDatabaseWindow(User user) {
+        this.dialog = new Dialog();
+        VerticalLayout formLayout = (VerticalLayout) factoryUser.create(user);
+        Button end = new Button("Сохранить");
+        formLayout.add(end);
+        end.addClickListener(evt -> dialog.close());
+        this.dialog.add(formLayout);
+        this.dialog.setWidth("300px");
+        this.dialog.setHeight("650px");
+        this.dialog.setCloseOnOutsideClick(false);
+    }
+}
