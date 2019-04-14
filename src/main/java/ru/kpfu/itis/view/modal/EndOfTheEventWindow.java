@@ -11,6 +11,7 @@ import ru.kpfu.itis.factory.ComponentFactoryUserImpl;
 
 public class EndOfTheEventWindow {
     private Dialog dialog;
+    private ComponentFactory<User> factory = new ComponentFactoryUserImpl();
 
     public Dialog getDialog() {
         return dialog;
@@ -35,7 +36,6 @@ public class EndOfTheEventWindow {
         div.setText("Проверьте присутствие участников на мероприятии");
         formLayout.add(div);
         if (event.getParticipants() != null && event.getParticipants().size() != 0) {
-            ComponentFactory<User> factory = new ComponentFactoryUserImpl();
             for (User user : event.getParticipants()) {
                 formLayout.add(factory.create(user));
             }
