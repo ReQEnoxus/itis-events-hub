@@ -14,7 +14,11 @@ public class AuthManager {
     }
 
     public static User getCurrentUser() {
-        return (User) VaadinSession.getCurrent().getAttribute("user");
+        if (VaadinSession.getCurrent().getAttribute("user") != null) {
+            return (User) VaadinSession.getCurrent().getAttribute("user");
+        } else {
+            return emptyUser;
+        }
     }
 
     public static void registerUser(User user) {
