@@ -1,39 +1,34 @@
 package ru.kpfu.itis.view.modal;
 
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.textfield.PasswordField;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.login.LoginI18n;
+import com.vaadin.flow.component.login.LoginOverlay;
+import ru.kpfu.itis.auth.AuthManager;
 
 public class LoginWindow {
-    private Dialog dialog;
+    public static void show() {
+        LoginOverlay loginOverlay = new LoginOverlay();
+        loginOverlay.setTitle("ITIS Events Hub");
+        loginOverlay.setDescription("Войдите в систему");
+        loginOverlay.setForgotPasswordButtonVisible(false);
 
-    public static void openLoginWindow() {
-        new LoginWindow().dialog.open();
-    }
+        LoginI18n login = LoginI18n.createDefault();
+        login.getErrorMessage().setTitle("Неверное имя пользователя или пароль");
+        login.getErrorMessage().setMessage("Проверьте введенные данные");
+        login.getForm().setPassword("Пароль");
+        login.getForm().setSubmit("Войти");
+        login.getForm().setTitle(null);
+        login.getForm().setUsername("Логин");
 
-    public LoginWindow() {
-        this.dialog = new Dialog();
-        this.dialog.add(createLoginComponents());
-        this.dialog.setWidth("200px");
-        this.dialog.setHeight("250px");
-        this.dialog.setCloseOnOutsideClick(false);
-    }
-
-    private FormLayout createLoginComponents() {
-        FormLayout formLayout = new FormLayout();
-        formLayout.add("Войти в систему");
-        TextField login = new TextField();
-        login.setWidth("100%");
-        formLayout.addFormItem(login, "Логин");
-        PasswordField passwordField = new PasswordField();
-        passwordField.setWidth("100%");
-        formLayout.addFormItem(passwordField, "Пароль");
-        Button button = new Button("Войти");
-        formLayout.add(button);
-        button.addClickListener(evt -> dialog.close());
-        formLayout.setSizeFull();
-        return formLayout;
+        loginOverlay.setI18n(login);
+        loginOverlay.addLoginListener(evt -> {
+            try {
+                AuthManager.loginUser(evt.getUsername(), evt.getPassword());
+                loginOverlay.close();
+            }
+            catch (IllegalArgumentException e) {
+                loginOverlay.setError(true);
+            }
+        });
+        loginOverlay.setOpened(true);
     }
 }
