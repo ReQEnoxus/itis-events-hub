@@ -13,7 +13,7 @@ public class ComponentFactoryUserImpl implements ComponentFactory<User> {
         userLayout.setAlignItems(FlexComponent.Alignment.CENTER);
         userLayout.setWidth("100%");
         TextField userData = new TextField();
-        userData.setValue(user.getName() + " " + user.getLastname());
+        userData.setValue(user.getName() + " " + user.getLastname() + " " + user.getPatronymic());
         userData.setReadOnly(true);
         Checkbox confirmUser = new Checkbox();
         confirmUser.setValue(true);
