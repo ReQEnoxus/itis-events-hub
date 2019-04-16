@@ -15,7 +15,6 @@ import ru.kpfu.itis.auth.AuthManager;
 import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.entity.Role;
 import ru.kpfu.itis.entity.User;
-import ru.kpfu.itis.view.EndOfTheEventWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,13 +117,9 @@ public class EventInfo {
 
         List<User> volunteerList = event.getParticipants();
 
-
         Grid<User> volunteerGrid = new Grid<>(User.class);
         volunteerGrid.setColumns("lastname", "name", "patronymic");
-        if (volunteerList.size() != 0) {
-            volunteerGrid.setItems(volunteerList);
-        }
-        else volunteerGrid.setVisible(false);
+        volunteerGrid.setItems(volunteerList);
 
         volunteerGrid.setHeight("200px");
 
@@ -138,9 +133,6 @@ public class EventInfo {
             endButton.getStyle().set("color", "red");
             buttonLayout.add(endButton);
             dialog.add(buttonLayout);
-            endButton.addClickListener(e -> {
-                EndOfTheEventWindow end = new EndOfTheEventWindow(event)
-            })
         }
 
         dialog.open();
