@@ -1,4 +1,4 @@
-package ru.kpfu.itis.view;
+package ru.kpfu.itis.factory;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
