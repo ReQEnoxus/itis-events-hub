@@ -6,12 +6,13 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.entity.User;
-import ru.kpfu.itis.factory.ComponentFactory;
 import ru.kpfu.itis.factory.ComponentFactoryUserImpl;
+
+import java.util.ArrayList;
 
 public class EndOfTheEventWindow {
     private Dialog dialog;
-    private ComponentFactory<User> factory = new ComponentFactoryUserImpl();
+    private ComponentFactoryUserImpl factory;
 
     public Dialog getDialog() {
         return dialog;
@@ -31,6 +32,7 @@ public class EndOfTheEventWindow {
     }
 
     private FormLayout createEndOfTheEventComponents(Event event) {
+        factory = new ComponentFactoryUserImpl();
         FormLayout formLayout = new FormLayout();
         Div div = new Div();
         div.setText("Проверьте присутствие участников на мероприятии");
@@ -46,7 +48,26 @@ public class EndOfTheEventWindow {
         }
         Button end = new Button("Завершить");
         formLayout.add(end);
-        end.addClickListener(evt -> dialog.close());
+        end.addClickListener(evt -> {
+            if (event.getParticipants() != null && event.getParticipants().size() != 0) {
+                addPointsToParticipants(event);
+            }
+            event.setActive(false);
+            dialog.close();
+        });
         return formLayout;
+    }
+
+    private void addPointsToParticipants(Event event) {
+        for (int i = 0; i < event.getParticipants().size(); i++) {
+            User user = event.getParticipants().get(i);
+            if (factory.getMap().get(factory.getCheckboxes().get(i))) {
+                user.setPoints(user.getPoints() + event.getPrize());
+                if (user.getAccomplishedEvents() == null) {
+                    user.setAccomplishedEvents(new ArrayList<Event>());
+                }
+                user.getAccomplishedEvents().add(event);
+            }
+        }
     }
 }
