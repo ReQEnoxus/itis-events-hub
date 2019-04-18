@@ -8,12 +8,17 @@ public class Event {
     private String description;
     private List<User> participants;
     private int prize;
+    private boolean active;
     private int capacity;
     private Date date;
     private User host;
     private int id;
 
     public Event() {
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public int getId() {
