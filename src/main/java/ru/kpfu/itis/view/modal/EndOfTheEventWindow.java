@@ -68,7 +68,6 @@ public class EndOfTheEventWindow {
                 }
                 user.getAccomplishedEvents().add(event);
             }
-            System.out.println(user.getPoints());
         }
     }
 }
