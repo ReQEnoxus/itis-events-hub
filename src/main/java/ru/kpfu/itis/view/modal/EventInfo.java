@@ -133,6 +133,11 @@ public class EventInfo {
             endButton.getStyle().set("color", "red");
             buttonLayout.add(endButton);
             dialog.add(buttonLayout);
+            endButton.addClickListener(e -> {
+                EndOfTheEventWindow end = new EndOfTheEventWindow(event);
+                end.openEndOfTheEventWindow(event);
+                dialog.close();
+            });
         }
 
         dialog.open();
