@@ -37,16 +37,13 @@ public class ComponentFactoryPage<T> implements ComponentFactory<ru.kpfu.itis.en
         HorizontalLayout nameDateLayout = new HorizontalLayout(nameDate, dateName, participantsLabel);
         Label descriptionName = new Label(entity.getDescription());
 
-        descriptionName.getStyle().set("font-family", "Blogger Sans");
         descriptionName.getStyle().set("color", "#A9A9A9");
         descriptionName.getStyle().set("max-width", "50pc");
         Button information = new Button("Информация");
         information.getStyle().set("cursor", "pointer");
         information.getStyle().set("color", "#486AE0");
-        information.getStyle().set("font-family", "Blogger Sans");
         information.getStyle().set("font-style", "italic");
         Button participate = new Button("Записаться");
-        participate.getStyle().set("font-family", "Blogger Sans");
         participate.getStyle().set("font-style", "italic");
         participate.getStyle().set("background-color", "#486AE0");
         participate.getStyle().set("color", "white");
