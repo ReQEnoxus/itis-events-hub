@@ -6,8 +6,6 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import ru.kpfu.itis.entity.Event;
 
-import javax.swing.*;
-
 public class ComponentFactoryEvent implements ComponentFactory<Event> {
     @Override
     public Component create(Event entity) {
