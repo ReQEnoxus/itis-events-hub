@@ -31,7 +31,6 @@ public class EventInfo {
     }
 
     private static void openWindowEnded() {
-
         H1 label = new H1("Мероприятие завершено");
         label.getStyle().set("font-size", "-webkit-xxx-large");
         label.getStyle().set("color", "red");
@@ -118,8 +117,19 @@ public class EventInfo {
         List<User> volunteerList = event.getParticipants();
 
         Grid<User> volunteerGrid = new Grid<>(User.class);
-        volunteerGrid.setColumns("lastname", "name", "patronymic");
+        volunteerGrid.addColumn(User::getLastname).setHeader("Фамилия");
+        volunteerGrid.addColumn(User::getName).setHeader("Имя");
+        volunteerGrid.addColumn(User::getPatronymic).setHeader("Отчество");
         volunteerGrid.setItems(volunteerList);
+        volunteerGrid.removeColumnByKey("id");
+        volunteerGrid.removeColumnByKey("lastname");
+        volunteerGrid.removeColumnByKey("name");
+        volunteerGrid.removeColumnByKey("patronymic");
+        volunteerGrid.removeColumnByKey("role");
+        volunteerGrid.removeColumnByKey("login");
+        volunteerGrid.removeColumnByKey("password");
+        volunteerGrid.removeColumnByKey("points");
+        volunteerGrid.removeColumnByKey("accomplishedEvents");
 
         volunteerGrid.setHeight("200px");
 
@@ -133,11 +143,7 @@ public class EventInfo {
             endButton.getStyle().set("color", "red");
             buttonLayout.add(endButton);
             dialog.add(buttonLayout);
-            endButton.addClickListener(e -> {
-                EndOfTheEventWindow end = new EndOfTheEventWindow(event);
-                end.openEndOfTheEventWindow(event);
-                dialog.close();
-            });
+            endButton.addClickListener(e -> EndOfTheEventWindow.openEndOfTheEventWindow(event));
         }
 
         dialog.open();

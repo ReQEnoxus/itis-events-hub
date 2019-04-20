@@ -6,7 +6,7 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import ru.kpfu.itis.entity.User;
 
-public class ComponentFactoryUser<T> implements ComponentFactory<User> {
+public class ComponentFactoryUser implements ComponentFactory<User> {
 
     @Override
     public Component create(User entity) {

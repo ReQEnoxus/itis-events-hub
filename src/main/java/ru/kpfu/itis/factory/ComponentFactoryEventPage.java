@@ -1,16 +1,14 @@
 package ru.kpfu.itis.factory;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import javafx.scene.control.ProgressBar;
 import ru.kpfu.itis.entity.Event;
-import ru.kpfu.itis.factory.ComponentFactory;
+import ru.kpfu.itis.view.modal.EventInfo;
 
-public class ComponentFactoryPage<T> implements ComponentFactory<ru.kpfu.itis.entity.Event> {
+public class ComponentFactoryEventPage implements ComponentFactory<ru.kpfu.itis.entity.Event> {
 
     @Override
     public Component create(Event entity) {
@@ -35,10 +33,14 @@ public class ComponentFactoryPage<T> implements ComponentFactory<ru.kpfu.itis.en
         participantsLabel.getStyle().set("color", "#A9A9A9");
         participantsLabel.getStyle().set("font-wight", "500");
         HorizontalLayout nameDateLayout = new HorizontalLayout(nameDate, dateName, participantsLabel);
-        Label descriptionName = new Label(entity.getDescription());
+        Label description = new Label(entity.getDescription());
 
-        descriptionName.getStyle().set("color", "#A9A9A9");
-        descriptionName.getStyle().set("max-width", "50pc");
+        description.getStyle().set("color", "#A9A9A9");
+        description.getStyle().set("min-width", "50pc");
+        description.getStyle().set("display", "-webkit-box");
+        description.getStyle().set("-webkit-line-clamp", "3");
+        description.getStyle().set("-webkit-box-orient", "vertical");
+        description.getStyle().set("overflow", "hidden");
         Button information = new Button("Информация");
         information.getStyle().set("cursor", "pointer");
         information.getStyle().set("color", "#486AE0");
@@ -48,10 +50,19 @@ public class ComponentFactoryPage<T> implements ComponentFactory<ru.kpfu.itis.en
         participate.getStyle().set("background-color", "#486AE0");
         participate.getStyle().set("color", "white");
         participate.getStyle().set("cursor", "pointer");
-        HorizontalLayout descriptionLayout = new HorizontalLayout(descriptionName, information, participate);
+        HorizontalLayout buttons = new HorizontalLayout(information, participate);
+        buttons.getStyle().set("margin-left", "10pc");
+        buttons.getStyle().set("align-self","end");
+        buttons.getStyle().set("margin-right", "20pc");
+        information.addClickListener(e -> {
+            EventInfo.openWindow(entity);
+        });
+        HorizontalLayout descriptionLayout = new HorizontalLayout(description, buttons);
         textLayout.add(nameDateLayout, descriptionLayout);
         mainLayout.add(textLayout);
         mainLayout.setSpacing(false);
         return mainLayout;
+
+        
     }
 }
