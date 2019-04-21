@@ -1,19 +1,20 @@
 package ru.kpfu.itis.dao;
 
-import ru.kpfu.itis.entity.Event;
+import ru.kpfu.itis.entity.EventModel;
 
 import java.util.List;
 
 public interface EventDao {
-    Event get(int id);
+    EventModel get(int id);
 
-    List<Event> getAll();
+    List<EventModel> getAll();
 
-    List<Event> getActive();
+    List<EventModel> getActive();
 
-    void create(Event item);
+    void create(EventModel item);
 
-    void update(int id, Event newItem);
+    void update(int id, EventModel newItem);
 
     void delete(int id);
+
 }

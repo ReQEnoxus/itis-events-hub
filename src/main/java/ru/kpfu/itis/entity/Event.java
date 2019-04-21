@@ -1,5 +1,6 @@
 package ru.kpfu.itis.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Event {
@@ -8,7 +9,7 @@ public class Event {
     private List<User> participants;
     private int prize;
     private int capacity;
-    private User host;
+    private String host;
     private int id;
     private boolean active;
     private String place;
@@ -17,7 +18,35 @@ public class Event {
     private String dateStart;
     private String dateEnd;
 
-    public Event() {
+    public Event(int id, String name, String description, int prize, int capacity, String host, boolean active, String place, String timeStart, String timeEnd, String dateStart, String dateEnd) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.prize = prize;
+        this.capacity = capacity;
+        this.host = host;
+        this.active = active;
+        this.place = place;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.participants = new ArrayList<>();
+    }
+
+    public Event(String name, String description, int prize, int capacity, String host, boolean active, String place, String timeStart, String timeEnd, String dateStart, String dateEnd) {
+        this.name = name;
+        this.description = description;
+        this.prize = prize;
+        this.capacity = capacity;
+        this.host = host;
+        this.active = active;
+        this.place = place;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.participants = new ArrayList<>();
     }
 
     public boolean isActive() {
@@ -76,11 +105,11 @@ public class Event {
         this.id = id;
     }
 
-    public User getHost() {
+    public String getHost() {
         return host;
     }
 
-    public void setHost(User host) {
+    public void setHost(String host) {
         this.host = host;
     }
 

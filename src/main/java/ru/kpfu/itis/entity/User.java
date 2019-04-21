@@ -1,19 +1,28 @@
 package ru.kpfu.itis.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
     private String name;
     private String lastname;
     private String patronymic;
-    private int id;
     private int points = 0;
     private String login;
     private String password;
-    private List<Event> accomplishedEvents;
+    private List<Integer> accomplishedEvents;
     private Role role;
 
-    public User() {
+    public User(String name, String lastname, String patronymic, int points, String login, String password, Role role) {
+
+        this.name = name;
+        this.lastname = lastname;
+        this.patronymic = patronymic;
+        this.points = points;
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        accomplishedEvents = new ArrayList<>();
     }
 
     public void addPoints(int amount) {
@@ -44,13 +53,6 @@ public class User {
         this.patronymic = patronymic;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getPoints() {
         return points;
@@ -76,11 +78,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Event> getAccomplishedEvents() {
+    public List<Integer> getAccomplishedEvents() {
         return accomplishedEvents;
     }
 
-    public void setAccomplishedEvents(List<Event> accomplishedEvents) {
+    public void setAccomplishedEvents(List<Integer> accomplishedEvents) {
         this.accomplishedEvents = accomplishedEvents;
     }
 
