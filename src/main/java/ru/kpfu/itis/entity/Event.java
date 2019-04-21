@@ -18,6 +18,8 @@ public class Event {
     private String dateStart;
     private String dateEnd;
 
+    public Event(){}
+
     public Event(int id, String name, String description, int prize, int capacity, String host, boolean active, String place, String timeStart, String timeEnd, String dateStart, String dateEnd) {
         this.id = id;
         this.name = name;

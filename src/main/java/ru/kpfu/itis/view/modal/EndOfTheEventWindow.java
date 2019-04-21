@@ -64,9 +64,9 @@ public class EndOfTheEventWindow {
             if (factory.getMap().get(factory.getCheckboxes().get(i))) {
                 user.setPoints(user.getPoints() + event.getPrize());
                 if (user.getAccomplishedEvents() == null) {
-                    user.setAccomplishedEvents(new ArrayList<Event>());
+                    user.setAccomplishedEvents(new ArrayList<Integer>());
                 }
-                user.getAccomplishedEvents().add(event);
+                user.getAccomplishedEvents().add(event.getId());
             }
         }
     }

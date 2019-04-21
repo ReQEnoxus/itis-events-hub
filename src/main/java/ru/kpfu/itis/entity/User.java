@@ -13,6 +13,8 @@ public class User {
     private List<Integer> accomplishedEvents;
     private Role role;
 
+    public User(){}
+
     public User(String name, String lastname, String patronymic, int points, String login, String password, Role role) {
 
         this.name = name;
