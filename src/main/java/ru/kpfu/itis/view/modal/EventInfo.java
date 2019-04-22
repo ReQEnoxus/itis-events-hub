@@ -138,7 +138,7 @@ public class EventInfo {
         dialog.add(gridLayout);
         VerticalLayout buttonLayout = new VerticalLayout();
 
-        if (AuthManager.getCurrentUser().getRole().equals(Role.ADMIN) || AuthManager.getCurrentUser().equals(event.getHost())) {
+        if (AuthManager.getCurrentUser().getRole().equals(Role.ADMIN) || AuthManager.getCurrentUser().getLogin().equals(event.getHost())) {
             Button endButton = new Button("Завершить");
             endButton.getStyle().set("color", "red");
             buttonLayout.add(endButton);
