@@ -15,6 +15,9 @@ public class MainWindow extends AbstractWindow {
     public MainWindow(){
         if(AuthManager.getCurrentUser().getRole() == Role.ADMIN || AuthManager.getCurrentUser().getRole() == Role.VERIFIED){
             Button plusButton = new Button(new Icon(VaadinIcon.PLUS));
+            plusButton.getStyle().set("background-color", "rgb(17, 173, 79)");
+            plusButton.getStyle().set("color", "white");
+            plusButton.getStyle().set("cursor", "pointer");
             setContent(plusButton);
         }
         EventService eventService = new EventService();
