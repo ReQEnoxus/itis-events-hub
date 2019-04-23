@@ -1,17 +1,13 @@
 package ru.kpfu.itis.auth;
 
 import com.vaadin.flow.server.VaadinSession;
-import ru.kpfu.itis.dao.UserDao;
 import ru.kpfu.itis.entity.Role;
 import ru.kpfu.itis.entity.User;
+import ru.kpfu.itis.service.UserService;
 
 public class AuthManager {
-    private static User emptyUser = new User();
-    private static UserDao userDao = null;
-
-    static {
-        emptyUser.setRole(Role.GUEST);
-    }
+    private static User emptyUser = new User(null, null, null, 0, null, null, Role.GUEST);
+    private static UserService userService = new UserService();
 
     public static User getCurrentUser() {
         if (VaadinSession.getCurrent().getAttribute("user") != null) {
@@ -22,11 +18,11 @@ public class AuthManager {
     }
 
     public static void registerUser(User user) {
-        userDao.create(user);
+        userService.create(user);
     }
 
     public static void loginUser(String login, String password) {
-        User requestedUser = userDao.get(login);
+        User requestedUser = userService.get(login);
 
         if (requestedUser == null) {
             throw new IllegalArgumentException("Invalid login");
