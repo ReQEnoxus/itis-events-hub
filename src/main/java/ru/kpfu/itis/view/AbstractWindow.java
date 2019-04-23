@@ -15,12 +15,13 @@ import java.util.List;
 public abstract class AbstractWindow extends VerticalLayout {
     private List<Slide> list = new ArrayList<>();
     private boolean bool = false;
-    private final String COLOR = "#439acf";
-    private final String COLORWHITE = "#ffffff";
+    private final String COLOR_GREY = "rgb(150, 163, 171)";
+    private final String COLOR_BLUE = "#439acf";
+    private final String COLOR_WHITE = "#ffffff";
     private Carousel carousel;
     private VerticalLayout verticalLayout = new VerticalLayout();
     private VerticalLayout contentLayout = new VerticalLayout();
-    Tabs tabs;
+    private Tabs tabs;
 
 
     public AbstractWindow() {
@@ -29,6 +30,22 @@ public abstract class AbstractWindow extends VerticalLayout {
         verticalLayout.setSpacing(false);
         verticalLayout.setPadding(false);
         contentLayout.setPadding(true);
+
+        Tab tab1 = new Tab("Рейтинг");
+        Tab tab2 = new Tab("Мероприятия");
+        Tab tab3 = new Tab("Мои мероприятия");
+        Tab tab4 = new Tab("Профиль");
+        Tab tab5 = new Tab("Выйти");
+        tabs = new Tabs(tab1, tab2, tab3, tab4, tab5);
+
+        tabs.getStyle().set("-webkit-text-fill-color", COLOR_WHITE);
+        tabs.setFlexGrowForEnclosedTabs(1.0);
+        tabs.setWidth("100%");
+        tabs.getStyle().set("background-color", COLOR_BLUE);
+
+        addCarouselComponent("text",COLOR_GREY);
+        addCarouselComponent("text",COLOR_GREY);
+        verticalLayout.add(tabs);
         add(verticalLayout);
         add(contentLayout);
     }
@@ -37,22 +54,7 @@ public abstract class AbstractWindow extends VerticalLayout {
         contentLayout.add(component);
     }
 
-    public void getTabs(){
-        Tab tab1 = new Tab("Рейтинг");
-        Tab tab2 = new Tab("Мероприятия");
-        Tab tab3 = new Tab("Мои мероприятия");
-        Tab tab4 = new Tab("Профиль");
-        Tab tab5 = new Tab("Выйти");
-        tabs = new Tabs(tab1, tab2, tab3, tab4, tab5);
-
-        tabs.getStyle().set("-webkit-text-fill-color", COLORWHITE);
-        tabs.setFlexGrowForEnclosedTabs(1.0);
-        tabs.setWidth("100%");
-        tabs.getStyle().set("background-color", COLOR);
-
-        verticalLayout.add(tabs);
-    }
-    public void addComponent(String string, String color) {
+    private void addCarouselComponent(String string, String color) {
         list.add(new Slide(createSlideContent(string, color)));
         Slide[] arrList = new Slide[list.size()];
         for (int i = 0; i < list.size(); i++) {
