@@ -7,12 +7,16 @@ import com.vaadin.flow.component.html.Div;
 import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.entity.User;
 import ru.kpfu.itis.factory.ComponentFactoryUserImpl;
+import ru.kpfu.itis.service.EventService;
+import ru.kpfu.itis.service.UserService;
 
 import java.util.ArrayList;
 
 public class EndOfTheEventWindow {
     private Dialog dialog;
     private ComponentFactoryUserImpl factory;
+    private EventService eventService = new EventService();
+    private UserService userService = new UserService();
 
     public Dialog getDialog() {
         return dialog;
@@ -53,6 +57,7 @@ public class EndOfTheEventWindow {
                 addPointsToParticipants(event);
             }
             event.setActive(false);
+            eventService.update(event.getId(), event);
             dialog.close();
         });
         return formLayout;
@@ -67,6 +72,7 @@ public class EndOfTheEventWindow {
                     user.setAccomplishedEvents(new ArrayList<Integer>());
                 }
                 user.getAccomplishedEvents().add(event.getId());
+                userService.update(user.getLogin(), user);
             }
         }
     }
