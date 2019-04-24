@@ -4,21 +4,26 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.router.Route;
 import ru.kpfu.itis.auth.AuthManager;
 import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.entity.Role;
 import ru.kpfu.itis.factory.ComponentFactoryEventPage;
 import ru.kpfu.itis.service.EventService;
+import ru.kpfu.itis.view.modal.EventCreateWindow;
 
 import java.util.List;
 
+@Route("")
 public class MainWindow extends AbstractWindow {
     public MainWindow(){
+        tabs.setSelectedTab(tab2);
         if(AuthManager.getCurrentUser().getRole() == Role.ADMIN || AuthManager.getCurrentUser().getRole() == Role.VERIFIED){
             Button plusButton = new Button(new Icon(VaadinIcon.PLUS));
             plusButton.getStyle().set("background-color", "rgb(17, 173, 79)");
             plusButton.getStyle().set("color", "white");
             plusButton.getStyle().set("cursor", "pointer");
+            plusButton.addClickListener(evt -> EventCreateWindow.openWindow());
             setContent(plusButton);
         }
         EventService eventService = new EventService();
