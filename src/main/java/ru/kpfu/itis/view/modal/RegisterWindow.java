@@ -25,8 +25,14 @@ public class RegisterWindow {
         H2 text = new H2("Регистрация");
         text.getStyle().set("color", "#FFFFFF");
         title.setAlignItems(FlexComponent.Alignment.CENTER);
-        title.setHeight("150px");
+        title.setHeight("200px");
         title.add(text);
+        title.setWidth("200%");
+        title.getStyle().set("background-color", "#1676F3");
+        title.getStyle().set("position", "relative");
+        title.getStyle().set("bottom", "40px");
+        text.getStyle().set("position", "relative");
+        text.getStyle().set("top", "45px");
 
         Span span = new Span();
         span.setHeight("25px");
@@ -113,8 +119,6 @@ public class RegisterWindow {
         layout.add(patronymicField);
         layout.add(span);
         layout.add(register);
-        // красим оверлей)))
-        UI.getCurrent().getPage().executeJavaScript("document.querySelector('#overlay').shadowRoot.querySelector('#overlay').style.backgroundImage = \"linear-gradient(180deg, #1676F3 180px, #FFFFFF 0)\"");
         dialog.add(layout);
         dialog.setOpened(true);
     }
