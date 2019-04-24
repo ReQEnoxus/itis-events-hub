@@ -9,7 +9,7 @@ public class LoginWindow {
         LoginOverlay loginOverlay = new LoginOverlay();
         loginOverlay.setTitle("ITIS Events Hub");
         loginOverlay.setDescription("Войдите в систему");
-        loginOverlay.setForgotPasswordButtonVisible(false);
+        loginOverlay.setForgotPasswordButtonVisible(true);
 
         LoginI18n login = LoginI18n.createDefault();
         login.getErrorMessage().setTitle("Неверное имя пользователя или пароль");
@@ -18,6 +18,7 @@ public class LoginWindow {
         login.getForm().setSubmit("Войти");
         login.getForm().setTitle(null);
         login.getForm().setUsername("Логин");
+        login.getForm().setForgotPassword("Регистрация");
 
         loginOverlay.setI18n(login);
         loginOverlay.addLoginListener(evt -> {
@@ -28,6 +29,10 @@ public class LoginWindow {
             catch (IllegalArgumentException e) {
                 loginOverlay.setError(true);
             }
+        });
+        loginOverlay.addForgotPasswordListener(evt -> {
+            loginOverlay.close();
+            RegisterWindow.show();
         });
         loginOverlay.setOpened(true);
     }
