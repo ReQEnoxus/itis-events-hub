@@ -1,11 +1,10 @@
 package ru.kpfu.itis.view.modal;
 
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -16,7 +15,6 @@ import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.entity.Role;
 import ru.kpfu.itis.entity.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EventInfo {
@@ -121,7 +119,7 @@ public class EventInfo {
         volunteerGrid.addColumn(User::getName).setHeader("Имя");
         volunteerGrid.addColumn(User::getPatronymic).setHeader("Отчество");
         volunteerGrid.setItems(volunteerList);
-        volunteerGrid.removeColumnByKey("id");
+
         volunteerGrid.removeColumnByKey("lastname");
         volunteerGrid.removeColumnByKey("name");
         volunteerGrid.removeColumnByKey("patronymic");
@@ -131,6 +129,7 @@ public class EventInfo {
         volunteerGrid.removeColumnByKey("points");
         volunteerGrid.removeColumnByKey("accomplishedEvents");
 
+
         volunteerGrid.setHeight("200px");
 
         HorizontalLayout gridLayout = new HorizontalLayout();
@@ -138,12 +137,15 @@ public class EventInfo {
         dialog.add(gridLayout);
         VerticalLayout buttonLayout = new VerticalLayout();
 
-        if (AuthManager.getCurrentUser().getRole().equals(Role.ADMIN) || AuthManager.getCurrentUser().getLogin().equals(event.getHost())) {
+        if (AuthManager.getCurrentUser().getLogin() != null && (AuthManager.getCurrentUser().getRole().equals(Role.ADMIN) || AuthManager.getCurrentUser().getLogin().equals(event.getHost()))) {
             Button endButton = new Button("Завершить");
             endButton.getStyle().set("color", "red");
             buttonLayout.add(endButton);
             dialog.add(buttonLayout);
-            endButton.addClickListener(e -> EndOfTheEventWindow.openEndOfTheEventWindow(event));
+            endButton.addClickListener(e -> {
+                EndOfTheEventWindow.openEndOfTheEventWindow(event);
+                dialog.close();
+            });
         }
 
         dialog.open();
