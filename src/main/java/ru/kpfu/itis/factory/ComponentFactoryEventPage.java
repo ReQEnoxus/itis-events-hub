@@ -3,16 +3,20 @@ package ru.kpfu.itis.factory;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import ru.kpfu.itis.auth.AuthManager;
 import ru.kpfu.itis.entity.Event;
+import ru.kpfu.itis.service.EventService;
 import ru.kpfu.itis.view.modal.EventInfo;
+import ru.kpfu.itis.view.modal.LoginWindow;
 
 public class ComponentFactoryEventPage implements ComponentFactory<ru.kpfu.itis.entity.Event> {
 
     @Override
     public Component create(Event entity) {
-
+        EventService eventService = new EventService();
         HorizontalLayout mainLayout = new HorizontalLayout();
         VerticalLayout textLayout = new VerticalLayout();
         textLayout.setSpacing(false);
@@ -46,6 +50,23 @@ public class ComponentFactoryEventPage implements ComponentFactory<ru.kpfu.itis.
         information.getStyle().set("color", "#486AE0");
         information.getStyle().set("font-style", "italic");
         Button participate = new Button("Записаться");
+        participate.addClickListener(evt -> {
+            if (AuthManager.getCurrentUser().getLogin() != null) {
+                if (entity.getParticipants().size() < entity.getCapacity()) {
+                    if (!entity.getParticipants().contains(AuthManager.getCurrentUser())) {
+                        entity.getParticipants().add(AuthManager.getCurrentUser());
+                        Notification.show("Вы записались на мероприятие", 3000, Notification.Position.TOP_END);
+                        eventService.update(entity.getId(), entity);
+                    } else {
+                        Notification.show("Вы уже записаны на это мероприятие", 3000, Notification.Position.TOP_END);
+                    }
+                } else {
+                    Notification.show("На это мероприятие уже нет свободных мест", 3000, Notification.Position.TOP_END);
+                }
+            } else {
+                LoginWindow.show();
+            }
+        });
         participate.getStyle().set("font-style", "italic");
         participate.getStyle().set("background-color", "#486AE0");
         participate.getStyle().set("color", "white");
