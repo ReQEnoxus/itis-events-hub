@@ -1,5 +1,6 @@
 package ru.kpfu.itis.view.modal;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.login.LoginOverlay;
 import ru.kpfu.itis.auth.AuthManager;
@@ -25,6 +26,7 @@ public class LoginWindow {
             try {
                 AuthManager.loginUser(evt.getUsername(), evt.getPassword());
                 loginOverlay.close();
+                UI.getCurrent().getPage().reload();
             }
             catch (IllegalArgumentException e) {
                 loginOverlay.setError(true);
