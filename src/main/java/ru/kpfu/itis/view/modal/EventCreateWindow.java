@@ -1,5 +1,6 @@
 package ru.kpfu.itis.view.modal;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -46,7 +47,7 @@ public class EventCreateWindow {
 
         DatePicker dateEnd = new DatePicker();
         dateEnd.setRequired(true);
-        dateEnd.setErrorMessage("Мероприятие должно иметь дату начала");
+        dateEnd.setErrorMessage("Мероприятие должно иметь дату окончания");
 
         TimePicker timeStart = new TimePicker();
         timeStart.setRequired(true);
@@ -137,6 +138,7 @@ public class EventCreateWindow {
                 eventService.create(eventBeingCreated);
                 Notification.show("Мероприятие успешно создано", 3000, Notification.Position.TOP_END);
                 mainWindow.close();
+                UI.getCurrent().getPage().reload();
             }
         });
 
