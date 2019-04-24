@@ -1,6 +1,7 @@
 package ru.kpfu.itis.view;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import ru.kpfu.itis.auth.AuthManager;
@@ -23,9 +24,17 @@ public class MainWindow extends AbstractWindow {
         EventService eventService = new EventService();
         List<Event> eventList = eventService.getActive();
 
-        ComponentFactoryEventPage eventPage = new ComponentFactoryEventPage();
-        for (int i = 0; i < eventList.size(); i++) {
-            add(eventPage.create(eventList.get(i)));
+        if (eventList.size() == 0) {
+            Label label = new Label();
+            label.setText("Нет ни одного активного мероприятия");
+            label.getStyle().set("color", "#47494c");
+            label.getStyle().set("align-self", "center");
+            setContent(label);
+        } else {
+            ComponentFactoryEventPage eventPage = new ComponentFactoryEventPage();
+            for (int i = 0; i < eventList.size(); i++) {
+                setContent(eventPage.create(eventList.get(i)));
+            }
         }
     }
 }
