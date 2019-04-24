@@ -3,6 +3,7 @@ package ru.kpfu.itis.view;
 import com.flowingcode.vaadin.addons.carousel.Carousel;
 import com.flowingcode.vaadin.addons.carousel.Slide;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,7 +24,17 @@ public abstract class AbstractWindow extends VerticalLayout {
     private Carousel carousel;
     private VerticalLayout verticalLayout = new VerticalLayout();
     private VerticalLayout contentLayout = new VerticalLayout();
-    private Tabs tabs;
+    protected Tabs tabs;
+    protected Tab tab1 = new Tab("Рейтинг");
+    protected Tab tab2 = new Tab("Мероприятия");
+    protected Tab tab3 = new Tab("Мои мероприятия");
+    protected Tab tab4 = new Tab("Профиль");
+    protected Tab tab5 = new Tab("Выйти");
+    protected Tab tab6 = new Tab("Войти");
+
+    private class PreviousTabContainer {
+        Tab prevSelected;
+    }
 
 
     public AbstractWindow() {
@@ -33,33 +44,32 @@ public abstract class AbstractWindow extends VerticalLayout {
         verticalLayout.setPadding(false);
         contentLayout.setPadding(true);
 
-        Tab tab1 = new Tab("Рейтинг");
-        Tab tab2 = new Tab("Мероприятия");
-        Tab tab3 = new Tab("Мои мероприятия");
-        Tab tab4 = new Tab("Профиль");
-        Tab tab5 = new Tab("Выйти");
-        Tab tab6 = new Tab("Войти");
         if (AuthManager.getCurrentUser().getLogin() != null) {
             tabs = new Tabs(tab1, tab2, tab3, tab4, tab5);
         } else {
             tabs = new Tabs(tab1, tab2, tab6);
         }
+        PreviousTabContainer previouslySelectedContainer = new PreviousTabContainer();
+        previouslySelectedContainer.prevSelected = tabs.getSelectedTab();
 
         tabs.addSelectedChangeListener(selectedChangeEvent -> {
             if (tabs.getSelectedTab().equals(tab1)) {
-
+                UI.getCurrent().navigate("404");
             } else if (tabs.getSelectedTab().equals(tab2)) {
-
+                UI.getCurrent().navigate("");
             } else if (tabs.getSelectedTab().equals(tab3)) {
-
+                UI.getCurrent().navigate("404");
             } else if (tabs.getSelectedTab().equals(tab4)) {
-
+                UI.getCurrent().navigate("404");
             } else if (tabs.getSelectedTab().equals(tab5)) {
                 AuthManager.logoutUser();
-                tabs.setSelectedTab(tab2);
+                tabs.setSelectedTab(previouslySelectedContainer.prevSelected);
+                UI.getCurrent().navigate("");
             } else {
                 LoginWindow.show();
+                tabs.setSelectedTab(previouslySelectedContainer.prevSelected);
             }
+            previouslySelectedContainer.prevSelected = tabs.getSelectedTab();
         });
 
         tabs.getStyle().set("-webkit-text-fill-color", COLOR_WHITE);
