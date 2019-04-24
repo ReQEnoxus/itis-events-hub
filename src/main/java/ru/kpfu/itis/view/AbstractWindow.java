@@ -8,6 +8,8 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import ru.kpfu.itis.auth.AuthManager;
+import ru.kpfu.itis.view.modal.LoginWindow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,29 @@ public abstract class AbstractWindow extends VerticalLayout {
         Tab tab3 = new Tab("Мои мероприятия");
         Tab tab4 = new Tab("Профиль");
         Tab tab5 = new Tab("Выйти");
-        tabs = new Tabs(tab1, tab2, tab3, tab4, tab5);
+        Tab tab6 = new Tab("Войти");
+        if (AuthManager.getCurrentUser().getLogin() != null) {
+            tabs = new Tabs(tab1, tab2, tab3, tab4, tab5);
+        } else {
+            tabs = new Tabs(tab1, tab2, tab6);
+        }
+
+        tabs.addSelectedChangeListener(selectedChangeEvent -> {
+            if (tabs.getSelectedTab().equals(tab1)) {
+
+            } else if (tabs.getSelectedTab().equals(tab2)) {
+
+            } else if (tabs.getSelectedTab().equals(tab3)) {
+
+            } else if (tabs.getSelectedTab().equals(tab4)) {
+
+            } else if (tabs.getSelectedTab().equals(tab5)) {
+                AuthManager.logoutUser();
+                tabs.setSelectedTab(tab2);
+            } else {
+                LoginWindow.show();
+            }
+        });
 
         tabs.getStyle().set("-webkit-text-fill-color", COLOR_WHITE);
         tabs.setFlexGrowForEnclosedTabs(1.0);
