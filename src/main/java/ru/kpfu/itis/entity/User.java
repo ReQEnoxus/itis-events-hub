@@ -95,4 +95,9 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.login.equals(((User) obj).login);
+    }
 }
