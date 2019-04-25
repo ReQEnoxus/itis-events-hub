@@ -52,16 +52,17 @@ public class ComponentFactoryEventPage implements ComponentFactory<ru.kpfu.itis.
         Button participate = new Button("Записаться");
         participate.addClickListener(evt -> {
             if (AuthManager.getCurrentUser().getLogin() != null) {
-                if (entity.getParticipants().size() < entity.getCapacity()) {
-                    if (!entity.getParticipants().contains(AuthManager.getCurrentUser())) {
+                if (!entity.getParticipants().contains(AuthManager.getCurrentUser())) {
+                    if (entity.getParticipants().size() < entity.getCapacity()) {
                         entity.getParticipants().add(AuthManager.getCurrentUser());
                         Notification.show("Вы записались на мероприятие", 3000, Notification.Position.TOP_END);
                         eventService.update(entity.getId(), entity);
+                        participantsLabel.setText(entity.getParticipants().size() + "/" + entity.getCapacity());
                     } else {
-                        Notification.show("Вы уже записаны на это мероприятие", 3000, Notification.Position.TOP_END);
+                        Notification.show("На это мероприятие не осталось свободных мест", 3000, Notification.Position.TOP_END);
                     }
                 } else {
-                    Notification.show("На это мероприятие уже нет свободных мест", 3000, Notification.Position.TOP_END);
+                    Notification.show("Вы уже записаны на это мероприятие", 3000, Notification.Position.TOP_END);
                 }
             } else {
                 LoginWindow.show();
