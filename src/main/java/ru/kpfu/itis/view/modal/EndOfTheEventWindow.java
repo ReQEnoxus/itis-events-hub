@@ -1,9 +1,11 @@
 package ru.kpfu.itis.view.modal;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.entity.User;
 import ru.kpfu.itis.factory.ComponentFactoryUserImpl;
@@ -30,14 +32,13 @@ public class EndOfTheEventWindow {
     public EndOfTheEventWindow(Event event) {
         this.dialog = new Dialog();
         this.dialog.add(createEndOfTheEventComponents(event));
-        this.dialog.setWidth("300px");
-        this.dialog.setHeight("150px");
         this.dialog.setCloseOnOutsideClick(false);
     }
 
-    private FormLayout createEndOfTheEventComponents(Event event) {
+    private VerticalLayout createEndOfTheEventComponents(Event event) {
         factory = new ComponentFactoryUserImpl();
-        FormLayout formLayout = new FormLayout();
+        VerticalLayout formLayout = new VerticalLayout();
+        formLayout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
         Div div = new Div();
         div.setText("Проверьте присутствие участников на мероприятии");
         formLayout.add(div);
@@ -51,6 +52,7 @@ public class EndOfTheEventWindow {
             formLayout.add(d);
         }
         Button end = new Button("Завершить");
+        end.getStyle().set("color", "red");
         formLayout.add(end);
         end.addClickListener(evt -> {
             if (event.getParticipants() != null && event.getParticipants().size() != 0) {
@@ -59,6 +61,7 @@ public class EndOfTheEventWindow {
             event.setActive(false);
             eventService.update(event.getId(), event);
             dialog.close();
+            UI.getCurrent().getPage().reload();
         });
         return formLayout;
     }
@@ -69,7 +72,7 @@ public class EndOfTheEventWindow {
             if (factory.getMap().get(factory.getCheckboxes().get(i))) {
                 user.setPoints(user.getPoints() + event.getPrize());
                 if (user.getAccomplishedEvents() == null) {
-                    user.setAccomplishedEvents(new ArrayList<Integer>());
+                    user.setAccomplishedEvents(new ArrayList<>());
                 }
                 user.getAccomplishedEvents().add(event.getId());
                 userService.update(user.getLogin(), user);
