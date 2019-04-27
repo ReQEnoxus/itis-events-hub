@@ -100,4 +100,18 @@ public class User {
     public boolean equals(Object obj) {
         return this.login.equals(((User) obj).login);
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", points=" + points +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", accomplishedEvents=" + accomplishedEvents +
+                ", role=" + role +
+                '}';
+    }
 }

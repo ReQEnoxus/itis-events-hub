@@ -4,10 +4,12 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.router.Route;
 import ru.kpfu.itis.auth.AuthManager;
 import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.entity.Role;
+import ru.kpfu.itis.entity.User;
 import ru.kpfu.itis.factory.ComponentFactoryEventPage;
 import ru.kpfu.itis.service.EventService;
 import ru.kpfu.itis.view.modal.EventCreateWindow;
@@ -26,6 +28,20 @@ public class MainWindow extends AbstractWindow {
             plusButton.addClickListener(evt -> EventCreateWindow.openWindow());
             setContent(plusButton);
         }
+        add(new Button("Register Accounts", evt -> {
+            User admin = new User("Имя", "Фамилия", "Отчество", 0, "ADMIN", "ADMIN", Role.ADMIN);
+            User verified = new User("Имя", "Фамилия", "Отчество", 0, "VERIFIED", "VERIFIED", Role.VERIFIED);
+            User regular = new User("Имя", "Фамилия", "Отчество", 0, "REGULAR", "REGULAR", Role.REGULAR);
+            try {
+                AuthManager.registerUser(admin);
+                AuthManager.registerUser(verified);
+                AuthManager.registerUser(regular);
+                Notification.show("Аккаунты успешно зарегистрированы", 3000, Notification.Position.TOP_END);
+            } catch (IllegalStateException e) {
+                Notification.show("Аккаунты уже зарегистрированы", 3000, Notification.Position.TOP_END);
+            }
+        }));
+
         EventService eventService = new EventService();
         List<Event> eventList = eventService.getActive();
 
