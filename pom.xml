@@ -151,7 +151,7 @@
                                 <artifactItem>
                                     <groupId>org.eclipse.jetty</groupId>
                                     <artifactId>jetty-runner</artifactId>
-                                    <version>9.4.4.v20170414</version>
+                                    <version>9.4.11.v20180605</version>
                                     <destFileName>jetty-runner.jar</destFileName>
                                 </artifactItem>
                             </artifactItems>
