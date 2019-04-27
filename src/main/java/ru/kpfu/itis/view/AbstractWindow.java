@@ -19,7 +19,7 @@ public abstract class AbstractWindow extends VerticalLayout {
     private List<Slide> list = new ArrayList<>();
     private boolean bool = false;
     private final String COLOR_GREY = "rgb(150, 163, 171)";
-    private final String COLOR_BLUE = "#439acf";
+    private final String COLOR_BLUE = "#1676F3";
     private final String COLOR_WHITE = "#ffffff";
     private Carousel carousel;
     private VerticalLayout verticalLayout = new VerticalLayout();
