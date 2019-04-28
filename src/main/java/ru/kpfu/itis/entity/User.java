@@ -11,7 +11,10 @@ public class User {
     private String login;
     private String password;
     private List<Integer> accomplishedEvents;
+    private List<Integer> currentEvents;
     private Role role;
+    private String description;
+    private boolean subscribed;
 
     public User(){}
 
@@ -25,6 +28,31 @@ public class User {
         this.password = password;
         this.role = role;
         accomplishedEvents = new ArrayList<>();
+        currentEvents = new ArrayList<>();
+    }
+
+    public List<Integer> getCurrentEvents() {
+        return currentEvents;
+    }
+
+    public void setCurrentEvents(List<Integer> currentEvents) {
+        this.currentEvents = currentEvents;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(boolean subscribed) {
+        this.subscribed = subscribed;
     }
 
     public void addPoints(int amount) {
