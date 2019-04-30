@@ -14,6 +14,7 @@ public class User {
     private List<Integer> currentEvents;
     private Role role;
     private String description;
+    private String email;
     private boolean subscribed;
 
     public User(){}
@@ -29,6 +30,14 @@ public class User {
         this.role = role;
         accomplishedEvents = new ArrayList<>();
         currentEvents = new ArrayList<>();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Integer> getCurrentEvents() {
