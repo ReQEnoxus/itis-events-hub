@@ -1,11 +1,11 @@
 package ru.kpfu.itis.view.modal;
 
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -17,7 +17,8 @@ import ru.kpfu.itis.entity.User;
 public class RegisterWindow {
     public static void show() {
         Dialog dialog = new Dialog();
-        dialog.setWidth("250px");
+        dialog.setHeightFull();
+        //dialog.setWidth("250px");
         VerticalLayout layout = new VerticalLayout();
         layout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
 
@@ -34,18 +35,29 @@ public class RegisterWindow {
         text.getStyle().set("position", "relative");
         text.getStyle().set("top", "45px");
 
-        Span span = new Span();
-        span.setHeight("25px");
+        VerticalLayout leftColumn = new VerticalLayout();
+        VerticalLayout rightColumn = new VerticalLayout();
+        HorizontalLayout columns = new HorizontalLayout();
+        columns.setSpacing(false);
+        columns.getStyle().set("position", "relative");
+        columns.getStyle().set("bottom", "35px");
 
         TextField loginField = new TextField();
         loginField.setRequired(true);
         loginField.setLabel("Логин: ");
         loginField.setErrorMessage("Логин не может быть пустым");
 
+        TextField emailField = new TextField();
+        emailField.setRequired(true);
+        emailField.setLabel("E-mail: ");
+        emailField.setErrorMessage("E-mail не может быть пустым");
+
         PasswordField passwordField = new PasswordField();
         passwordField.setRequired(true);
         passwordField.setLabel("Пароль: ");
         passwordField.setErrorMessage("Пароль не может быть пустым");
+
+        leftColumn.add(loginField, passwordField, emailField);
 
         TextField nameField = new TextField();
         nameField.setRequired(true);
@@ -60,23 +72,43 @@ public class RegisterWindow {
         TextField patronymicField = new TextField();
         patronymicField.setLabel("Отчество (при наличии): ");
 
+        Checkbox subscribeCheck = new Checkbox();
+        subscribeCheck.setLabel("Подписаться на уведомления о мероприятиях");
+        subscribeCheck.getStyle().set("position", "relative");
+        subscribeCheck.getStyle().set("bottom", "45px");
+
+        rightColumn.add(nameField, lastNameField, patronymicField);
+
+        columns.add(leftColumn, rightColumn);
+        columns.getStyle().set("align-self", "baseline");
+
         Button register = new Button();
         register.setText("Зарегистрироваться");
         register.getStyle().set("background-color", "#486AE0");
         register.getStyle().set("color", "white");
         register.getStyle().set("cursor", "pointer");
+        register.getStyle().set("position", "relative");
+        register.getStyle().set("bottom", "35px");
         register.addClickListener(evt -> {
             String loginValue = loginField.getValue();
             String passValue = passwordField.getValue();
             String nameValue = nameField.getValue();
             String lastNameValue = lastNameField.getValue();
             String patronymicValue = patronymicField.getValue();
+            String emailValue = emailField.getValue();
+            boolean checkboxValue = subscribeCheck.getValue();
 
             if (loginValue.equals("")) {
                 loginField.setErrorMessage("Логин не может быть пустым");
                 loginField.setInvalid(true);
             } else {
                 loginField.setInvalid(false);
+            }
+
+            if (emailValue.equals("")) {
+                emailField.setInvalid(true);
+            } else {
+                emailField.setInvalid(false);
             }
 
             if (passValue.equals("")) {
@@ -100,9 +132,12 @@ public class RegisterWindow {
             if (!loginField.isInvalid()
                     && !passwordField.isInvalid()
                     && !nameField.isInvalid()
-                    && !lastNameField.isInvalid()) {
+                    && !lastNameField.isInvalid()
+                    && !emailField.isInvalid()) {
                 try {
                     User user = new User(nameValue, lastNameValue, patronymicValue, 0, loginValue, passValue, Role.REGULAR);
+                    user.setEmail(emailValue);
+                    user.setSubscribed(checkboxValue);
                     AuthManager.registerUser(user);
                     dialog.close();
                 } catch (IllegalStateException e) {
@@ -111,14 +146,12 @@ public class RegisterWindow {
                 }
             }
         });
+
         layout.add(title);
-        layout.add(loginField);
-        layout.add(passwordField);
-        layout.add(lastNameField);
-        layout.add(nameField);
-        layout.add(patronymicField);
-        layout.add(span);
+        layout.add(columns);
+        layout.add(subscribeCheck);
         layout.add(register);
+        //layout.add(subscribeCheck);
         dialog.add(layout);
         dialog.setOpened(true);
     }
