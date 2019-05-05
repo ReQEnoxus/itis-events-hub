@@ -1,5 +1,6 @@
 package ru.kpfu.itis.view.modal;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -140,6 +141,8 @@ public class RegisterWindow {
                     user.setSubscribed(checkboxValue);
                     AuthManager.registerUser(user);
                     dialog.close();
+                    AuthManager.loginUser(user.getLogin(), user.getPassword());
+                    UI.getCurrent().getPage().reload();
                 } catch (IllegalStateException e) {
                     loginField.setErrorMessage("Пользователь с таким логином уже зарегистрирован");
                     loginField.setInvalid(true);
