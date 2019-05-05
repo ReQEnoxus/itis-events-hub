@@ -77,8 +77,8 @@ public abstract class AbstractWindow extends VerticalLayout {
         tabs.setWidth("100%");
         tabs.getStyle().set("background-color", COLOR_BLUE);
 
-        addCarouselComponent("text",COLOR_GREY);
-        addCarouselComponent("text",COLOR_GREY);
+        addCarouselComponent("ITIS EVENTS HUB");
+        addCarouselComponent("text");
         verticalLayout.add(tabs);
         add(verticalLayout);
         add(contentLayout);
@@ -88,8 +88,8 @@ public abstract class AbstractWindow extends VerticalLayout {
         contentLayout.add(component);
     }
 
-    private void addCarouselComponent(String string, String color) {
-        list.add(new Slide(createSlideContent(string, color)));
+    private void addCarouselComponent(String string) {
+        list.add(new Slide(createSlideContent(string)));
         Slide[] arrList = new Slide[list.size()];
         for (int i = 0; i < list.size(); i++) {
             arrList[i] = list.get(i);
@@ -106,14 +106,15 @@ public abstract class AbstractWindow extends VerticalLayout {
         bool = true;
     }
 
-    private Component createSlideContent(String string, String color) {
+    private Component createSlideContent(String string) {
         H1 label = new H1(string);
         label.getStyle().set("margin-top", "auto");
         label.getStyle().set("margin-bottom", "auto");
+        label.getStyle().set("color", "white");
         VerticalLayout vl = new VerticalLayout(label);
         vl.setAlignItems(FlexComponent.Alignment.CENTER);
         vl.setSizeFull();
-        vl.getStyle().set("background-color", color);
+        vl.getStyle().set("background-image", "linear-gradient(to top, #1676F3, #021b79)");
         return vl;
     }
 
