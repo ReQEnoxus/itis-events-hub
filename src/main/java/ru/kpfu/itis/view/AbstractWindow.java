@@ -54,7 +54,7 @@ public abstract class AbstractWindow extends VerticalLayout {
 
         tabs.addSelectedChangeListener(selectedChangeEvent -> {
             if (tabs.getSelectedTab().equals(tab1)) {
-                UI.getCurrent().navigate("404");
+                UI.getCurrent().navigate("rating");
             } else if (tabs.getSelectedTab().equals(tab2)) {
                 UI.getCurrent().navigate("");
             } else if (tabs.getSelectedTab().equals(tab3)) {
