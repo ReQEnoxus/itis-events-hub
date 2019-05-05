@@ -2,11 +2,10 @@ package ru.kpfu.itis.view;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.grid.HeaderRow;
-import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +13,6 @@ import ru.kpfu.itis.entity.User;
 import ru.kpfu.itis.service.UserService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Route("rating")
 public class UsersRatingWindow extends AbstractWindow {
@@ -23,6 +21,7 @@ public class UsersRatingWindow extends AbstractWindow {
         List<User> userList = userService.getAll();
         Grid<User> userGrid = new Grid<>();
         ListDataProvider<User> dataProvider = new ListDataProvider<>(userList);
+        dataProvider.setSortOrder(User::getPoints, SortDirection.DESCENDING);
 
         userGrid.setDataProvider(dataProvider);
 
