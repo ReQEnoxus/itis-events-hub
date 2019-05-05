@@ -4,9 +4,10 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -19,11 +20,12 @@ public class RegisterWindow {
     public static void show() {
         Dialog dialog = new Dialog();
         dialog.setHeightFull();
+        dialog.setWidth("65vw");
         //dialog.setWidth("250px");
-        VerticalLayout layout = new VerticalLayout();
-        layout.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
-
+        VerticalLayout mainLayout = new VerticalLayout();
+        FormLayout formLayout = new FormLayout();
         VerticalLayout title = new VerticalLayout();
+
         H2 text = new H2("Регистрация");
         text.getStyle().set("color", "#FFFFFF");
         title.setAlignItems(FlexComponent.Alignment.CENTER);
@@ -33,20 +35,16 @@ public class RegisterWindow {
         title.getStyle().set("background-color", "#1676F3");
         title.getStyle().set("position", "relative");
         title.getStyle().set("bottom", "40px");
+        title.getStyle().set("align-self", "center");
         text.getStyle().set("position", "relative");
         text.getStyle().set("top", "45px");
 
-        VerticalLayout leftColumn = new VerticalLayout();
-        VerticalLayout rightColumn = new VerticalLayout();
-        HorizontalLayout columns = new HorizontalLayout();
-        columns.setSpacing(false);
-        columns.getStyle().set("position", "relative");
-        columns.getStyle().set("bottom", "35px");
 
         TextField loginField = new TextField();
         loginField.setRequired(true);
         loginField.setLabel("Логин: ");
         loginField.setErrorMessage("Логин не может быть пустым");
+        loginField.setWidth("50%");
 
         TextField emailField = new TextField();
         emailField.setRequired(true);
@@ -57,8 +55,6 @@ public class RegisterWindow {
         passwordField.setRequired(true);
         passwordField.setLabel("Пароль: ");
         passwordField.setErrorMessage("Пароль не может быть пустым");
-
-        leftColumn.add(loginField, passwordField, emailField);
 
         TextField nameField = new TextField();
         nameField.setRequired(true);
@@ -78,10 +74,8 @@ public class RegisterWindow {
         subscribeCheck.getStyle().set("position", "relative");
         subscribeCheck.getStyle().set("bottom", "45px");
 
-        rightColumn.add(nameField, lastNameField, patronymicField);
-
-        columns.add(leftColumn, rightColumn);
-        columns.getStyle().set("align-self", "baseline");
+        Span span = new Span();
+        span.setHeight("50px");
 
         Button register = new Button();
         register.setText("Зарегистрироваться");
@@ -150,12 +144,23 @@ public class RegisterWindow {
             }
         });
 
-        layout.add(title);
-        layout.add(columns);
-        layout.add(subscribeCheck);
-        layout.add(register);
-        //layout.add(subscribeCheck);
-        dialog.add(layout);
+        VerticalLayout vl = new VerticalLayout();
+        vl.setDefaultHorizontalComponentAlignment(FlexComponent.Alignment.CENTER);
+        vl.add(subscribeCheck, register);
+        formLayout.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1),
+                new FormLayout.ResponsiveStep("21em", 2));
+
+        formLayout.add(emailField);
+        formLayout.add(loginField);
+        formLayout.add(passwordField);
+        formLayout.add(nameField);
+        formLayout.add(lastNameField);
+        formLayout.add(patronymicField);
+        mainLayout.add(title, formLayout, span, vl);
+        dialog.add(mainLayout);
+
+        UI.getCurrent().getPage().executeJavaScript("document.querySelector('#overlay').shadowRoot.querySelector('#overlay').style.overflowX = \"hidden\"");
+
         dialog.setOpened(true);
     }
 }
