@@ -4,12 +4,12 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import ru.kpfu.itis.auth.AuthManager;
 import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.service.EventService;
+import ru.kpfu.itis.service.UserService;
 import ru.kpfu.itis.view.modal.EventInfo;
 import ru.kpfu.itis.view.modal.LoginWindow;
 
@@ -52,11 +52,14 @@ public class ComponentFactoryEventPage implements ComponentFactory<ru.kpfu.itis.
         information.getStyle().set("font-style", "italic");
         Button participate = new Button("Записаться");
         EventService eventService = new EventService();
+        UserService userService = new UserService();
         participate.addClickListener(evt -> {
             if (AuthManager.getCurrentUser().getLogin() != null) {
                 if (!entity.getParticipants().contains(AuthManager.getCurrentUser())) {
                     if (entity.getParticipants().size() < entity.getCapacity()) {
                         entity.getParticipants().add(AuthManager.getCurrentUser());
+                        AuthManager.getCurrentUser().getCurrentEvents().add(entity.getId());
+                        userService.update(AuthManager.getCurrentUser().getLogin(), AuthManager.getCurrentUser());
                         Notification.show("Вы записались на мероприятие", 3000, Notification.Position.TOP_END);
                         eventService.update(entity.getId(), entity);
                         participantsLabel.setText(entity.getParticipants().size() + "/" + entity.getCapacity());
