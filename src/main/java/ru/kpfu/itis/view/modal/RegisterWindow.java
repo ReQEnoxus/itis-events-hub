@@ -14,6 +14,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import ru.kpfu.itis.auth.AuthManager;
 import ru.kpfu.itis.entity.Role;
 import ru.kpfu.itis.entity.User;
+import ru.kpfu.itis.service.security.MD5Util;
 
 
 public class RegisterWindow {
@@ -130,7 +131,8 @@ public class RegisterWindow {
                     && !lastNameField.isInvalid()
                     && !emailField.isInvalid()) {
                 try {
-                    User user = new User(nameValue, lastNameValue, patronymicValue, 0, loginValue, passValue, Role.REGULAR);
+                    String encryptedPass = MD5Util.md5Custom(passValue);
+                    User user = new User(nameValue, lastNameValue, patronymicValue, 0, loginValue, encryptedPass, Role.REGULAR);
                     user.setEmail(emailValue);
                     user.setSubscribed(checkboxValue);
                     AuthManager.registerUser(user);

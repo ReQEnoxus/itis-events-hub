@@ -10,6 +10,7 @@ import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import ru.kpfu.itis.auth.AuthManager;
+import ru.kpfu.itis.service.security.MD5Util;
 
 public class LoginWindow {
     public static void show() {
@@ -50,7 +51,7 @@ public class LoginWindow {
         loginOverlay.setI18n(login);
         loginOverlay.addLoginListener(evt -> {
             try {
-                AuthManager.loginUser(evt.getUsername(), evt.getPassword());
+                AuthManager.loginUser(evt.getUsername(), MD5Util.md5Custom(evt.getPassword()));
                 loginOverlay.close();
                 UI.getCurrent().getPage().reload();
             }
