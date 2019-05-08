@@ -135,6 +135,10 @@ public class User {
 
     @Override
     public boolean equals(Object obj) {
-        return this.login.equals(((User) obj).login);
+        if (obj instanceof User) {
+            return this.login.equals(((User) obj).login);
+        } else {
+            return super.equals(obj);
+        }
     }
 }
