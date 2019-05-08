@@ -16,6 +16,7 @@ import com.vaadin.flow.component.timepicker.TimePicker;
 import ru.kpfu.itis.auth.AuthManager;
 import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.service.EventService;
+import ru.kpfu.itis.service.email.EmailModule;
 
 import java.util.ArrayList;
 
@@ -137,6 +138,7 @@ public class EventCreateWindow {
                 eventBeingCreated.setHost(AuthManager.getCurrentUser().getLogin());
                 eventService.create(eventBeingCreated);
                 Notification.show("Мероприятие успешно создано", 3000, Notification.Position.TOP_END);
+                EmailModule.notifyUsers(eventBeingCreated);
                 mainWindow.close();
                 UI.getCurrent().getPage().reload();
             }
