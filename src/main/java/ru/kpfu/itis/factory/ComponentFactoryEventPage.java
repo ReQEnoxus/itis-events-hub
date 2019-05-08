@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import ru.kpfu.itis.auth.AuthManager;
@@ -16,12 +17,12 @@ public class ComponentFactoryEventPage implements ComponentFactory<ru.kpfu.itis.
 
     @Override
     public Component create(Event entity) {
-        EventService eventService = new EventService();
+
         HorizontalLayout mainLayout = new HorizontalLayout();
         VerticalLayout textLayout = new VerticalLayout();
         textLayout.setSpacing(false);
         Label nameDate = new Label(entity.getName());
-        nameDate.getStyle().set("margin-right", "2pc");
+        nameDate.getStyle().set("margin-right", "2vm");
         nameDate.getStyle().set("font-weight", "bold");
         nameDate.getStyle().set("font-style", "italic");
         nameDate.getStyle().set("font-size", "2pc");
@@ -40,7 +41,7 @@ public class ComponentFactoryEventPage implements ComponentFactory<ru.kpfu.itis.
         Label description = new Label(entity.getDescription());
 
         description.getStyle().set("color", "#A9A9A9");
-        description.getStyle().set("min-width", "50pc");
+        description.getStyle().set("min-width", "50vm");
         description.getStyle().set("display", "-webkit-box");
         description.getStyle().set("-webkit-line-clamp", "3");
         description.getStyle().set("-webkit-box-orient", "vertical");
@@ -50,6 +51,7 @@ public class ComponentFactoryEventPage implements ComponentFactory<ru.kpfu.itis.
         information.getStyle().set("color", "#486AE0");
         information.getStyle().set("font-style", "italic");
         Button participate = new Button("Записаться");
+        EventService eventService = new EventService();
         participate.addClickListener(evt -> {
             if (AuthManager.getCurrentUser().getLogin() != null) {
                 if (!entity.getParticipants().contains(AuthManager.getCurrentUser())) {
@@ -73,18 +75,22 @@ public class ComponentFactoryEventPage implements ComponentFactory<ru.kpfu.itis.
         participate.getStyle().set("color", "white");
         participate.getStyle().set("cursor", "pointer");
         HorizontalLayout buttons = new HorizontalLayout(information, participate);
-        buttons.getStyle().set("margin-left", "10pc");
+        buttons.getStyle().set("margin-left", "10vm");
         buttons.getStyle().set("align-self","end");
-        buttons.getStyle().set("margin-right", "20pc");
+        buttons.getStyle().set("margin-right", "20vm");
         information.addClickListener(e -> {
             EventInfo.openWindow(entity);
         });
-        HorizontalLayout descriptionLayout = new HorizontalLayout(description, buttons);
+        HorizontalLayout descriptionLayout = new HorizontalLayout(description);
         textLayout.add(nameDateLayout, descriptionLayout);
-        mainLayout.add(textLayout);
+        textLayout.getStyle().set("width", "70vw");
+//        buttons.setVerticalComponentAlignment(FlexComponent.Alignment.END);
+        buttons.getStyle().set("margin-top", "5vw");
+        mainLayout.add(textLayout, buttons);
+        mainLayout.setWidth("96vw");
         mainLayout.setSpacing(false);
         return mainLayout;
 
-        
+
     }
 }
