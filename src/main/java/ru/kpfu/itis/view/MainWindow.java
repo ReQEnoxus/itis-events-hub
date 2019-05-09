@@ -39,6 +39,10 @@ public class MainWindow extends AbstractWindow {
             ComponentFactoryEventPage eventPage = new ComponentFactoryEventPage();
             for (int i = 0; i < eventList.size(); i++) {
                 setContent(eventPage.create(eventList.get(i)));
+                Label hr = new Label();
+                hr.getElement().setProperty("innerHTML", "<hr>");
+                hr.getStyle().set("width", "100%");
+                setContent(hr);
             }
         }
     }
