@@ -78,7 +78,7 @@ public abstract class AbstractWindow extends VerticalLayout {
         tabs.getStyle().set("background-color", COLOR_BLUE);
 
         addCarouselComponent("ITIS EVENTS HUB");
-        addCarouselComponent("text");
+        addCarouselComponent("Единая площадка для проведения мероприятий");
         verticalLayout.add(tabs);
         add(verticalLayout);
         add(contentLayout);
@@ -111,6 +111,7 @@ public abstract class AbstractWindow extends VerticalLayout {
         label.getStyle().set("margin-top", "auto");
         label.getStyle().set("margin-bottom", "auto");
         label.getStyle().set("color", "white");
+        label.getStyle().set("font-size", "3vw");
         VerticalLayout vl = new VerticalLayout(label);
         vl.setAlignItems(FlexComponent.Alignment.CENTER);
         vl.setSizeFull();
