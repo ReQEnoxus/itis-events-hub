@@ -57,6 +57,11 @@ public class ComponentFactoryEventUnsub implements ComponentFactory<ru.kpfu.itis
             AuthManager.getCurrentUser().getCurrentEvents().remove(Integer.valueOf(entity.getId()));
             userService.update(AuthManager.getCurrentUser().getLogin(), AuthManager.getCurrentUser());
             Notification.show("Вы успешно отписались от мероприятия", 3000, Notification.Position.TOP_END);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             UI.getCurrent().getPage().reload();
         });
         unsub.getStyle().set("font-style", "italic");
@@ -73,7 +78,9 @@ public class ComponentFactoryEventUnsub implements ComponentFactory<ru.kpfu.itis
         HorizontalLayout descriptionLayout = new HorizontalLayout(description);
         textLayout.add(nameDateLayout, descriptionLayout);
         textLayout.getStyle().set("width", "70vw");
-        buttons.getStyle().set("margin-top", "5vw");
+        buttons.getStyle().set("margin-top", "3.5pc");
+        buttons.getStyle().set("margin-left", "10vw");
+        buttons.getStyle().set("left", "10vw");
         mainLayout.add(textLayout, buttons);
         mainLayout.setWidth("96vw");
         mainLayout.setSpacing(false);
