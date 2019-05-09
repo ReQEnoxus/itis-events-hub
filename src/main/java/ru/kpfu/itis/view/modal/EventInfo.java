@@ -1,6 +1,7 @@
 package ru.kpfu.itis.view.modal;
 
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
@@ -93,24 +94,20 @@ public class EventInfo {
         volunteersInfo.add(volunteers);
         if (event.getCapacity() == 1) {
             volunteersInfo.add(event.getCapacity() + " волонтер");
-        }
-        else if (event.getCapacity() > 1 && event.getCapacity() < 5) {
-            volunteersInfo.add(event.getCapacity()+ " волонтера");
-        }
-        else volunteersInfo.add(event.getCapacity() + " волонтеров");
+        } else if (event.getCapacity() > 1 && event.getCapacity() < 5) {
+            volunteersInfo.add(event.getCapacity() + " волонтера");
+        } else volunteersInfo.add(event.getCapacity() + " волонтеров");
         prizesInfo.add(prizes);
         if (event.getPrize() == 1) {
             prizesInfo.add(event.getPrize() + " балл");
-        }
-        else if (event.getPrize() >1 && event.getPrize() < 5) {
+        } else if (event.getPrize() > 1 && event.getPrize() < 5) {
             prizesInfo.add(event.getPrize() + " балла");
-        }
-        else prizesInfo.add(event.getPrize() + " баллов");
+        } else prizesInfo.add(event.getPrize() + " баллов");
         dialog.add(labelLayout);
         dialog.add(placeInfo, dateInfo, timeInfo, volunteersInfo, prizesInfo);
         dialog.add(new HorizontalLayout(panelContent));
-        dialog.setWidth("600px");
-        dialog.setHeight("650px");
+        dialog.setWidth("35vw");
+        //dialog.setHeight("650px");
 
         List<User> volunteerList = event.getParticipants();
 
@@ -128,9 +125,18 @@ public class EventInfo {
         volunteerGrid.removeColumnByKey("password");
         volunteerGrid.removeColumnByKey("points");
         volunteerGrid.removeColumnByKey("accomplishedEvents");
+        volunteerGrid.removeColumnByKey("currentEvents");
+        volunteerGrid.removeColumnByKey("description");
+        volunteerGrid.removeColumnByKey("subscribed");
+        volunteerGrid.removeColumnByKey("email");
+        volunteerGrid.addItemDoubleClickListener(user -> {
+            dialog.close();
+            UI.getCurrent().navigate("user/" + user.getItem().getLogin());
+        });
 
+        volunteerGrid.setHeight(volunteerList.size() * 100 + "px");
 
-        volunteerGrid.setHeight("200px");
+        //volunteerGrid.setHeight("200px");
 
         HorizontalLayout gridLayout = new HorizontalLayout();
         gridLayout.add(volunteerGrid);
