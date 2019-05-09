@@ -21,6 +21,10 @@ public class MyEventsWindow extends AbstractWindow {
             ComponentFactoryEventUnsub unsub = new ComponentFactoryEventUnsub();
             for (int id : AuthManager.getCurrentUser().getCurrentEvents()) {
                 setContent(unsub.create(es.get(id)));
+                Label hr = new Label();
+                hr.getElement().setProperty("innerHTML", "<hr>");
+                hr.getStyle().set("width", "100%");
+                setContent(hr);
             }
         }
     }
