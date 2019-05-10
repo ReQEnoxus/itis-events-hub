@@ -5,6 +5,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import ru.kpfu.itis.entity.User;
+import ru.kpfu.itis.view.modal.EditElementOfDatabaseWindow;
 
 public class ComponentFactoryUser implements ComponentFactory<User> {
 
@@ -18,6 +19,7 @@ public class ComponentFactoryUser implements ComponentFactory<User> {
         LNP.getStyle().set("font-weight", "bold");
         Button button = new Button("Изменить");
         button.getStyle().set("cursor" , "pointer");
+        button.addClickListener(evt -> EditElementOfDatabaseWindow.show(entity));
         nameButton.add(LNP, button);
         return nameButton;
     }
