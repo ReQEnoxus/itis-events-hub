@@ -1,32 +1,22 @@
 package ru.kpfu.itis.view;
 
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.server.VaadinSession;
 import ru.kpfu.itis.auth.AuthManager;
-import ru.kpfu.itis.dao.jdbc.JdbcUserDaoImpl;
 import ru.kpfu.itis.entity.Role;
 import ru.kpfu.itis.entity.User;
 import ru.kpfu.itis.service.EventService;
 import ru.kpfu.itis.service.UserService;
-
-import java.awt.*;
-import java.io.File;
-import java.util.LinkedList;
 
 @Route("user")
 public class UserWindow extends AbstractWindow implements HasUrlParameter<String> {
@@ -35,6 +25,10 @@ public class UserWindow extends AbstractWindow implements HasUrlParameter<String
     @Override
     public void setParameter(BeforeEvent beforeEvent, String s) {
         User userToShow = userService.get(s);
+        if (userToShow == null) {
+            beforeEvent.rerouteTo("404");
+            return;
+        }
 
         HorizontalLayout userInfo = new HorizontalLayout();
         VerticalLayout userImage = new VerticalLayout();

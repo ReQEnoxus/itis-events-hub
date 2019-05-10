@@ -132,9 +132,7 @@ public class RegisterWindow {
                     && !emailField.isInvalid()) {
                 try {
                     String encryptedPass = MD5Util.md5Custom(passValue);
-                    User user = new User(nameValue, lastNameValue, patronymicValue, 0, loginValue, encryptedPass, Role.REGULAR);
-                    user.setEmail(emailValue);
-                    user.setSubscribed(checkboxValue);
+                    User user = new User(nameValue, lastNameValue, patronymicValue, emailValue, null, checkboxValue, 0, loginValue, encryptedPass, Role.REGULAR);
                     AuthManager.registerUser(user);
                     dialog.close();
                     AuthManager.loginUser(user.getLogin(), user.getPassword());

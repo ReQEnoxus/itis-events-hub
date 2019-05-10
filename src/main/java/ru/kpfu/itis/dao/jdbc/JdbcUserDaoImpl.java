@@ -148,7 +148,7 @@ public class JdbcUserDaoImpl implements UserDao {
     @Override
     public void update(String login, User newItem) {
             String SQL = "UPDATE vol_user SET " +
-                    "first_name = ?, last_name = ?, patronymic = ?, email = ?, userinfo = ?, subscribed = ?points = ?, login = ?, password = ?,  role = ? " +
+                    "first_name = ?, last_name = ?, patronymic = ?, email = ?, userinfo = ?, subscribed = ?, points = ?, login = ?, password = ?,  role = ? " +
                     "WHERE login = ?";
             try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
                 stmt.setString(1, newItem.getName());
