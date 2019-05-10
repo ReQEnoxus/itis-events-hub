@@ -10,13 +10,10 @@ public class EmailModule {
 
     public static void notifyUsers(Event event) {
         UserService service = new UserService();
-        List<User> list = service.getAll();
+        List<User> list = service.getSubscribed();
         String message = "Создано новое мероприятие: " + event.getName();
         for (User user : list) {
-            if (user.isSubscribed()) {
-                System.out.println("sending email");
-                sendMessage(user.getEmail(), message);
-            }
+            sendMessage(user.getEmail(), message);
         }
     }
 
