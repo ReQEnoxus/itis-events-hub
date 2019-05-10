@@ -1,5 +1,6 @@
 package ru.kpfu.itis.view;
 
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -71,7 +72,7 @@ public class UserWindow extends AbstractWindow implements HasUrlParameter<String
             userText.add(about, userDescription);
         }
 
-        Image image = new Image("https://interior-dream.com.ua/files/products/ELD21081_1.1000x1000.jpg?cd3b616bc713172cb94f924e2e123fe7", "");
+        Image image = new Image();
         image.setHeight("500px");
         image.setWidth("400px");
         userText.getStyle().set("min-width", "45vw");
@@ -91,10 +92,21 @@ public class UserWindow extends AbstractWindow implements HasUrlParameter<String
                 }
                 else {
                     Button change = new Button("Изменить");
-                    change.addClickListener(g -> {
-                        //fixme (?)
+                    TextArea ta = new TextArea();
+                    Button submit = new Button("Сохранить");
+                    submit.setVisible(false);
+                    submit.addClickListener(f -> {
+                        userToShow.setDescription(ta.getValue());
+                        UI.getCurrent().getPage().reload();
                     });
-                    userText.add(change);
+                    ta.setVisible(false);
+                    ta.setWidth("30vw");
+                    change.addClickListener(g -> {
+                        change.setVisible(false);
+                        ta.setVisible(true);
+                        submit.setVisible(true);
+                    });
+                    userText.add(change, ta, submit);
                 }
             }
         }
