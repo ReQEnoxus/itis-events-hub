@@ -26,6 +26,7 @@ import ru.kpfu.itis.service.UserService;
 
 import java.awt.*;
 import java.io.File;
+import java.util.LinkedList;
 
 @Route("user")
 public class UserWindow extends AbstractWindow implements HasUrlParameter<String> {
@@ -43,28 +44,28 @@ public class UserWindow extends AbstractWindow implements HasUrlParameter<String
         Label userName = new Label(userToShow.getName() + " " + userToShow.getLastname());
         nameVerif.add(userName);
         if (userToShow.getRole() == Role.ADMIN || userToShow.getRole() == Role.VERIFIED) {
-            Icon verified = new Icon(VaadinIcon.CHECK_CIRCLE);
+            Icon verified = new Icon(VaadinIcon.CHECK);
             verified.setColor("#2BD317");
-            verified.setSize("2pc");
+            verified.setSize("1,5pc");
             nameVerif.add(verified);
         }
         userName.getStyle().set("font-family", "Blogger Sans");
         userName.getStyle().set("font-style", "Italic");
-        userName.getStyle().set("font-size", "3pc");
+        userName.getStyle().set("font-size", "2pc");
         userName.getStyle().set("font-weight", "bold");
         Label points = new Label("Баллы: " + userToShow.getPoints());
         points.getStyle().set("font-family", "Blogger Sans");
         points.getStyle().set("font-style", "Italic");
         points.getStyle().set("font-size", "2pc");
         userText.add(nameVerif, points);
-        userToShow.setDescription("РАздватри");
+
         if (userToShow.getDescription() != null) {
             Label about = new Label("О себе: ");
             about.getStyle().set("font-family", "Blogger Sans");
             about.getStyle().set("font-style", "Italic");
             about.getStyle().set("font-size", "2pc");
             Label userDescription = new Label(userToShow.getDescription());
-            userDescription.getStyle().set("margin-top", "1px");
+            userDescription.getStyle().set("margin-top", "0px");
             userDescription.getStyle().set("margin-left", "1vw");
             userDescription.getStyle().set("font-family", "Blogger Sans");
             userDescription.getStyle().set("font-style", "Italic");
@@ -73,16 +74,15 @@ public class UserWindow extends AbstractWindow implements HasUrlParameter<String
         }
 
         Image image = new Image();
-        image.setHeight("500px");
-        image.setWidth("400px");
-        userText.getStyle().set("min-width", "45vw");
+        image.setHeight("400px");
+        image.setWidth("300px");
 
         if (AuthManager.getCurrentUser().getLogin() != null) {
             if (AuthManager.getCurrentUser().getLogin().equals(userToShow.getLogin())) {
                 if (userToShow.getDescription() == null) {
                     TextArea tf = new TextArea();
                     tf.setPlaceholder("Полезная информация");
-                    tf.setWidth("30vw");
+                    tf.setWidth("20vw");
                     Button submit = new Button("Сохранить");
                     submit.addClickListener(f -> {
                         userToShow.setDescription(tf.getValue());
@@ -111,30 +111,48 @@ public class UserWindow extends AbstractWindow implements HasUrlParameter<String
             }
         }
 
-        userImage.add(image);
-        userInfo.add(userImage, userText);
-        userInfo.getStyle().set("align-self", "center");
+        VerticalLayout eventsLayout = new VerticalLayout();
 
         Label accomplishedEvents = new Label("Завершенные мероприятия: ");
+        accomplishedEvents.getStyle().set("margin-top", "0px");
         accomplishedEvents.getStyle().set("font-family", "Blogger Sans");
         accomplishedEvents.getStyle().set("font-style", "italic");
         accomplishedEvents.getStyle().set("font-size", "2pc");
-        accomplishedEvents.getStyle().set("align-self", "center");
 
         EventService eventService = new EventService();
 
+        eventsLayout.add(accomplishedEvents);
 
-        add(userInfo);
-        add(accomplishedEvents);
-        for (Integer event:
-                userToShow.getAccomplishedEvents()) {
-            Label theEvent = new Label(eventService.get(event).getName());
-            theEvent.getStyle().set("font-family", "Blogger Sans");
-            theEvent.getStyle().set("font-size", "2pc");
-            theEvent.getStyle().set("font-style", "italic");
-            theEvent.getStyle().set("align-self", "center");
-            add(theEvent);
+
+        if (userToShow.getAccomplishedEvents().size() > 0) {
+            for (Integer event :
+                    userToShow.getAccomplishedEvents()) {
+                Label theEvent = new Label(eventService.get(event).getName());
+                theEvent.getStyle().set("font-family", "Blogger Sans");
+                theEvent.getStyle().set("font-size", "2pc");
+                theEvent.getStyle().set("font-style", "italic");
+                theEvent.getStyle().set("margin-left", "1vw");
+                theEvent.getStyle().set("margin-top", "0px");
+                eventsLayout.add(theEvent);
+            }
+        }
+        else {
+            Label noEvents = new Label("Нет завершенных мероприятий");
+            noEvents.getStyle().set("align-self", "center");
+            noEvents.getStyle().set("font-size", "1pc");
+            noEvents.getStyle().set("font-family", "Blogger Sans");
+            noEvents.getStyle().set("font-style", "italic");
+            noEvents.getStyle().set("color", "#c0c1c1");
+            eventsLayout.add(noEvents);
         }
 
+        eventsLayout.getStyle().set("min-width", "30vw");
+        eventsLayout.getStyle().set("margin-top", "0px");
+        userText.getStyle().set("padding", "0px");
+        userImage.add(image);
+        userInfo.setWidth("80vw");
+        userInfo.add(userImage, userText, eventsLayout);
+
+        add(userInfo);
     }
 }
