@@ -1,5 +1,8 @@
 CREATE TABLE vol_user(
   first_name varchar[20],
+  email varchar[20],
+  userinfo varchar[20],
+  subscribtion integer,
   last_name varchar[20],
   patronymic varchar[20],
   points integer,
@@ -15,7 +18,7 @@ CREATE TABLE vol_event(
   prize integer,
   capacity integer,
   hostlogin varchar[20] references vol_user(login),
-  active boolean,
+  active integer,
   place varchar[20],
   timestart varchar[20],
   timeend varchar[20],
