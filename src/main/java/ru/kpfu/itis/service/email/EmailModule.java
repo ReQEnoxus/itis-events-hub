@@ -11,7 +11,7 @@ public class EmailModule {
     public static void notifyUsers(Event event) {
         UserService service = new UserService();
         List<User> list = service.getSubscribed();
-        String message = "Создано новое мероприятие: " + event.getName();
+        String message = "Создано новое мероприятие: " + event.getName() + "<br> <br> <a href=\"itiseventshub.herokuapp.com\"> Посмотреть на  ITIS Events HUB </a>";
         for (User user : list) {
             sendMessage(user.getEmail(), message);
         }
