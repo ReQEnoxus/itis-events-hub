@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class ConnectionManager {
     private static Connection conn;
 
-    private static final String url = "jdbc:postgresql:itisevents";
+    private static final String url = System.getenv("JDBC_DATABASE_URL");
 
     public static Connection getConnection(){
         if (conn == null) {
