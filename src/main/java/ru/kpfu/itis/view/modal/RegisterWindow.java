@@ -70,6 +70,9 @@ public class RegisterWindow {
         TextField patronymicField = new TextField();
         patronymicField.setLabel("Отчество (при наличии): ");
 
+        TextField groupField = new TextField();
+        groupField.setLabel("Группа (для студентов): ");
+
         Checkbox subscribeCheck = new Checkbox();
         subscribeCheck.setLabel("Подписаться на уведомления о мероприятиях");
         subscribeCheck.getStyle().set("position", "relative");
@@ -92,6 +95,7 @@ public class RegisterWindow {
             String lastNameValue = lastNameField.getValue();
             String patronymicValue = patronymicField.getValue();
             String emailValue = emailField.getValue();
+            String groupValie = groupField.getValue();
             boolean checkboxValue = subscribeCheck.getValue();
 
             if (loginValue.equals("")) {
@@ -132,7 +136,7 @@ public class RegisterWindow {
                     && !emailField.isInvalid()) {
                 try {
                     String encryptedPass = MD5Util.md5Custom(passValue);
-                    User user = new User(nameValue, lastNameValue, patronymicValue, emailValue, null, checkboxValue, 0, loginValue, encryptedPass, Role.REGULAR);
+                    User user = new User(nameValue, lastNameValue, patronymicValue, emailValue, groupValie, null, checkboxValue, 0, loginValue, encryptedPass, Role.REGULAR);
                     AuthManager.registerUser(user);
                     dialog.close();
                     AuthManager.loginUser(user.getLogin(), user.getPassword());

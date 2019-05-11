@@ -36,6 +36,7 @@ public class UsersRatingWindow extends AbstractWindow {
         patronymic.setSortable(true);
         Grid.Column<User> points = userGrid.addColumn(User::getPoints).setHeader("Баллы");
         points.setSortable(true);
+        Grid.Column<User> group = userGrid.addColumn(User::getGroup).setHeader("Группа");
 
         HeaderRow filterRow = userGrid.appendHeaderRow();
 
@@ -68,6 +69,16 @@ public class UsersRatingWindow extends AbstractWindow {
         filterRow.getCell(patronymic).setComponent(patronymicField);
         patronymicField.setSizeFull();
         patronymicField.setPlaceholder("Отчество");
+
+        //group filter
+        TextField groupField = new TextField();
+        groupField.addValueChangeListener(event ->
+                dataProvider.addFilter(user -> StringUtils.containsIgnoreCase(user.getGroup(), groupField.getValue())));
+        groupField.setValueChangeMode(ValueChangeMode.EAGER);
+        filterRow.getCell(group).setComponent(groupField);
+        groupField.setSizeFull();
+        groupField.setPlaceholder("Группа");
+
 
         //points filter
         TextField pointsFiled = new TextField();

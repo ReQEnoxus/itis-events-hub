@@ -8,13 +8,13 @@ import java.sql.SQLException;
 public class ConnectionManager {
     private static Connection conn;
 
-    private static final String url = "jdbc:sqlite:vol.db";
+    private static final String url = "jdbc:postgresql:itisevents";
 
     public static Connection getConnection(){
         if (conn == null) {
             try {
                 conn = DriverManager.getConnection(url);
-                System.out.println("Connection to SQLite has been established.");
+                System.out.println("Connection to psql has been established.");
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }

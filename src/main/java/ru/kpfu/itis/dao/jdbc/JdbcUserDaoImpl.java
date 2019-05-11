@@ -21,6 +21,7 @@ public class JdbcUserDaoImpl implements UserDao {
             rs.getString("patronymic"),
             rs.getString("email"),
             rs.getString("userinfo"),
+            rs.getString("unigroup"),
             rs.getBoolean("subscribed"),
             rs.getInt("points"),
             rs.getString("login"),
@@ -118,19 +119,20 @@ public class JdbcUserDaoImpl implements UserDao {
     @Override
     public void create(User item) {
         String login = item.getLogin();
-        String SQL = "INSERT INTO vol_user(first_name, last_name, patronymic, email, userinfo, subscribed, points, login, password,  role) " +
-                "VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String SQL = "INSERT INTO vol_user(first_name, last_name, patronymic, email, userinfo, unigroup, subscribed, points, login, password,  role) " +
+                "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setString(1, item.getName());
             stmt.setString(2, item.getLastname());
             stmt.setString(3, item.getPatronymic());
             stmt.setString(4, item.getEmail());
             stmt.setString(5, item.getDescription());
-            stmt.setBoolean(6, item.isSubscribed());
-            stmt.setInt(7, item.getPoints());
-            stmt.setString(8, login);
-            stmt.setString(9, item.getPassword());
-            stmt.setString(10, item.getRole().toString());
+            stmt.setString(6, item.getGroup());
+            stmt.setBoolean(7, item.isSubscribed());
+            stmt.setInt(8, item.getPoints());
+            stmt.setString(9, login);
+            stmt.setString(10, item.getPassword());
+            stmt.setString(11, item.getRole().toString());
             stmt.executeUpdate();
         } catch(SQLException e) {
             throw new IllegalStateException(e);
@@ -148,7 +150,7 @@ public class JdbcUserDaoImpl implements UserDao {
     @Override
     public void update(String login, User newItem) {
             String SQL = "UPDATE vol_user SET " +
-                    "first_name = ?, last_name = ?, patronymic = ?, email = ?, userinfo = ?, subscribed = ?, points = ?, login = ?, password = ?,  role = ? " +
+                    "first_name = ?, last_name = ?, patronymic = ?, email = ?, userinfo = ?, unigroup = ?, subscribed = ?, points = ?, login = ?, password = ?,  role = ? " +
                     "WHERE login = ?";
             try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
                 stmt.setString(1, newItem.getName());
@@ -156,12 +158,13 @@ public class JdbcUserDaoImpl implements UserDao {
                 stmt.setString(3, newItem.getPatronymic());
                 stmt.setString(4, newItem.getEmail());
                 stmt.setString(5, newItem.getDescription());
-                stmt.setBoolean(6,newItem.isSubscribed());
-                stmt.setInt(7, newItem.getPoints());
-                stmt.setString(8, newItem.getLogin());
-                stmt.setString(9, newItem.getPassword());
-                stmt.setString(10, newItem.getRole().toString());
-                stmt.setString(11, login);
+                stmt.setString(6, newItem.getGroup());
+                stmt.setBoolean(7, newItem.isSubscribed());
+                stmt.setInt(8, newItem.getPoints());
+                stmt.setString(9, newItem.getLogin());
+                stmt.setString(10, newItem.getPassword());
+                stmt.setString(11, newItem.getRole().toString());
+                stmt.setString(12, login);
                 stmt.executeUpdate();
             } catch(SQLException e) {
                 throw new IllegalStateException(e);
