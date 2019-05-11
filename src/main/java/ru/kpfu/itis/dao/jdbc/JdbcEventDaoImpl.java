@@ -31,7 +31,7 @@ public class JdbcEventDaoImpl implements EventDao {
             rs.getString("dateend")
     );
 
-    private List<String> getUserList(int id){
+    private List<String> getUserList(int id) {
         String SQL = "SELECT * FROM event_user WHERE eventid = ?";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setInt(1, id);
@@ -42,7 +42,7 @@ public class JdbcEventDaoImpl implements EventDao {
                 }
                 return userlist;
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -133,38 +133,38 @@ public class JdbcEventDaoImpl implements EventDao {
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
-        for (String login: item.getParticipants()) {
+        for (String login : item.getParticipants()) {
             addUser(id, login);
         }
     }
 
     @Override
     public void update(int id, EventModel newItem) {
-            String SQL = "UPDATE vol_event SET " +
-                    "name = ?, description = ?, prize = ?, capacity = ?, hostlogin = ?, active = ?,  place = ?, timestart = ?, timeend = ?, datestart = ?, dateend = ? " +
-                    "WHERE id = ?";
-            try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
-                stmt.setString(1, newItem.getName());
-                stmt.setString(2, newItem.getDescription());
-                stmt.setInt(3, newItem.getPrize());
-                stmt.setInt(4, newItem.getCapacity());
-                stmt.setString(5, newItem.getHost());
-                stmt.setBoolean(6, newItem.isActive());
-                stmt.setString(7, newItem.getPlace());
-                stmt.setString(8, newItem.getTimeStart());
-                stmt.setString(9, newItem.getTimeEnd());
-                stmt.setString(10, newItem.getDateStart());
-                stmt.setString(11, newItem.getDateEnd());
-                stmt.setInt(12, id);
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                throw new IllegalStateException(e);
-            }
-            List<String> list = newItem.getParticipants();
-            removeAllUsers(id);
-            for (String login: list) {
-                addUser(id, login);
-            }
+        String SQL = "UPDATE vol_event SET " +
+                "name = ?, description = ?, prize = ?, capacity = ?, hostlogin = ?, active = ?,  place = ?, timestart = ?, timeend = ?, datestart = ?, dateend = ? " +
+                "WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+            stmt.setString(1, newItem.getName());
+            stmt.setString(2, newItem.getDescription());
+            stmt.setInt(3, newItem.getPrize());
+            stmt.setInt(4, newItem.getCapacity());
+            stmt.setString(5, newItem.getHost());
+            stmt.setBoolean(6, newItem.isActive());
+            stmt.setString(7, newItem.getPlace());
+            stmt.setString(8, newItem.getTimeStart());
+            stmt.setString(9, newItem.getTimeEnd());
+            stmt.setString(10, newItem.getDateStart());
+            stmt.setString(11, newItem.getDateEnd());
+            stmt.setInt(12, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+        List<String> list = newItem.getParticipants();
+        removeAllUsers(id);
+        for (String login : list) {
+            addUser(id, login);
+        }
     }
 
     @Override
@@ -173,21 +173,21 @@ public class JdbcEventDaoImpl implements EventDao {
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
         SQL = "DELETE FROM event_user WHERE eventid = ?";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
         SQL = "DELETE FROM vol_event WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
 
