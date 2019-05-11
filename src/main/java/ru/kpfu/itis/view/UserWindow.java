@@ -74,13 +74,16 @@ public class UserWindow extends AbstractWindow implements HasUrlParameter<String
         hr.getElement().setProperty("innerHTML", "<hr>");
         hr.getStyle().set("width", "100%");
         setContent(hr);
+        if (!userToShow.getAccomplishedEvents().isEmpty()) {
+            Label accomplished = new Label();
+            accomplished.setText("Завершенные мероприятия: ");
+            setContent(accomplished);
 
-        Label accomplished = new Label();
-        accomplished.setText("Завершенные мероприятия: ");
-        setContent(accomplished);
-
-        for (int id : userToShow.getAccomplishedEvents()) {
-            setContent(new Label(eventService.get(id).getName()));
+            for (int id : userToShow.getAccomplishedEvents()) {
+                setContent(new Label(eventService.get(id).getName()));
+            }
+        } else {
+            setContent(new Label("Этот пользователь не завершил ни одного мероприятия"));
         }
 
     }
