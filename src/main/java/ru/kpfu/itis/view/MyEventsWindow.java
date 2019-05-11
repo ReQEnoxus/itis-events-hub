@@ -1,11 +1,13 @@
 package ru.kpfu.itis.view;
 
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import ru.kpfu.itis.auth.AuthManager;
 import ru.kpfu.itis.factory.ComponentFactoryEventUnsub;
 import ru.kpfu.itis.service.EventService;
 
+@PageTitle("Мои мероприятия - ITIS Events HUB")
 @Route("participating")
 public class MyEventsWindow extends AbstractWindow {
     public MyEventsWindow() {

@@ -4,6 +4,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import ru.kpfu.itis.auth.AuthManager;
 import ru.kpfu.itis.entity.Event;
@@ -14,6 +15,7 @@ import ru.kpfu.itis.view.modal.EventCreateWindow;
 
 import java.util.List;
 
+@PageTitle("Активные мероприятия - ITIS Events HUB")
 @Route("")
 public class MainWindow extends AbstractWindow {
     public MainWindow(){

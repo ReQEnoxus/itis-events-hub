@@ -29,7 +29,8 @@ public class UserWindow extends AbstractWindow implements HasUrlParameter<String
             beforeEvent.rerouteTo("404");
             return;
         }
-
+        UI.getCurrent().getPage().setTitle("Профиль пользователя " + s + " - ITIS Events HUB");
+        tabs.setSelectedTab(tab4);
         HorizontalLayout userInfo = new HorizontalLayout();
         VerticalLayout userImage = new VerticalLayout();
         VerticalLayout userText = new VerticalLayout();

@@ -43,11 +43,21 @@ public abstract class AbstractWindow extends VerticalLayout {
         verticalLayout.setSpacing(false);
         verticalLayout.setPadding(false);
         contentLayout.setPadding(true);
-
+        tabs = new Tabs(tab1, tab2, tab3, tab4, tab5, tab6);
         if (AuthManager.getCurrentUser().getLogin() != null) {
-            tabs = new Tabs(tab1, tab2, tab3, tab4, tab5);
+            tab1.setVisible(true);
+            tab2.setVisible(true);
+            tab3.setVisible(true);
+            tab4.setVisible(true);
+            tab5.setVisible(true);
+            tab6.setVisible(false);
         } else {
-            tabs = new Tabs(tab1, tab2, tab6);
+            tab1.setVisible(true);
+            tab2.setVisible(true);
+            tab3.setVisible(false);
+            tab4.setVisible(false);
+            tab5.setVisible(false);
+            tab6.setVisible(true);
         }
         PreviousTabContainer previouslySelectedContainer = new PreviousTabContainer();
         previouslySelectedContainer.prevSelected = tabs.getSelectedTab();

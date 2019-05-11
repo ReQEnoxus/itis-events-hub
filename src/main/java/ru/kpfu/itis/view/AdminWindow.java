@@ -1,5 +1,6 @@
 package ru.kpfu.itis.view;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
@@ -35,6 +36,7 @@ public class AdminWindow extends VerticalLayout implements HasUrlParameter<Strin
     }
 
     private void buildUI(String itemType) {
+        UI.getCurrent().getPage().setTitle("Панель администратора - " + (itemType.equals("users") ? "пользователи" : "мероприятия"));
         if (itemType.equals("users")) {
             List<User> users = userService.getAll();
             for (User user : users) {

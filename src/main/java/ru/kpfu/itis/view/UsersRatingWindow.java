@@ -7,6 +7,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.apache.commons.lang3.StringUtils;
 import ru.kpfu.itis.entity.User;
@@ -14,9 +15,11 @@ import ru.kpfu.itis.service.UserService;
 
 import java.util.List;
 
+@PageTitle("Рейтинг волонтеров - ITIS Events HUB")
 @Route("rating")
 public class UsersRatingWindow extends AbstractWindow {
     public UsersRatingWindow() {
+        tabs.setSelectedTab(tab1);
         UserService userService = new UserService();
         List<User> userList = userService.getAll();
         Grid<User> userGrid = new Grid<>();
