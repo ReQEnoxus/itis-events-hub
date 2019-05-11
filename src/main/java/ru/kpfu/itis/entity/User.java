@@ -15,11 +15,12 @@ public class User {
     private Role role;
     private String description;
     private String email;
+    private String group;
     private boolean subscribed;
 
     public User(){}
 
-    public User(String name, String lastname, String patronymic, String email, String userinfo, boolean subscribed, int points, String login, String password, Role role) {
+    public User(String name, String lastname, String patronymic, String email, String userinfo, String group, boolean subscribed, int points, String login, String password, Role role) {
 
         this.name = name;
         this.lastname = lastname;
@@ -31,8 +32,17 @@ public class User {
         this.login = login;
         this.password = password;
         this.role = role;
+        this.group = group;
         accomplishedEvents = new ArrayList<>();
         currentEvents = new ArrayList<>();
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public String getEmail() {
