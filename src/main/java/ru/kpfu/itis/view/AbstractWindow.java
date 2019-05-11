@@ -43,24 +43,36 @@ public abstract class AbstractWindow extends VerticalLayout {
         verticalLayout.setSpacing(false);
         verticalLayout.setPadding(false);
         contentLayout.setPadding(true);
-
+        tabs = new Tabs(tab1, tab2, tab3, tab4, tab5, tab6);
         if (AuthManager.getCurrentUser().getLogin() != null) {
-            tabs = new Tabs(tab1, tab2, tab3, tab4, tab5);
+            tab1.setVisible(true);
+            tab2.setVisible(true);
+            tab3.setVisible(true);
+            tab4.setVisible(true);
+            tab5.setVisible(true);
+            tab6.setVisible(false);
         } else {
-            tabs = new Tabs(tab1, tab2, tab6);
+            tab1.setVisible(true);
+            tab2.setVisible(true);
+            tab3.setVisible(false);
+            tab4.setVisible(false);
+            tab5.setVisible(false);
+            tab6.setVisible(true);
         }
         PreviousTabContainer previouslySelectedContainer = new PreviousTabContainer();
         previouslySelectedContainer.prevSelected = tabs.getSelectedTab();
 
         tabs.addSelectedChangeListener(selectedChangeEvent -> {
             if (tabs.getSelectedTab().equals(tab1)) {
-                UI.getCurrent().navigate("404");
+                UI.getCurrent().navigate("rating");
             } else if (tabs.getSelectedTab().equals(tab2)) {
                 UI.getCurrent().navigate("");
             } else if (tabs.getSelectedTab().equals(tab3)) {
-                UI.getCurrent().navigate("404");
+                UI.getCurrent().navigate("participating");
             } else if (tabs.getSelectedTab().equals(tab4)) {
-                UI.getCurrent().navigate("user/" + AuthManager.getCurrentUser().getLogin());
+                if (selectedChangeEvent.isFromClient()) {
+                    UI.getCurrent().navigate("user/" + AuthManager.getCurrentUser().getLogin());
+                }
             } else if (tabs.getSelectedTab().equals(tab5)) {
                 AuthManager.logoutUser();
                 tabs.setSelectedTab(previouslySelectedContainer.prevSelected);
@@ -77,8 +89,8 @@ public abstract class AbstractWindow extends VerticalLayout {
         tabs.setWidth("100%");
         tabs.getStyle().set("background-color", COLOR_BLUE);
 
-        addCarouselComponent("text",COLOR_GREY);
-        addCarouselComponent("text",COLOR_GREY);
+        addCarouselComponent("ITIS EVENTS HUB");
+        addCarouselComponent("Единая площадка для проведения мероприятий");
         verticalLayout.add(tabs);
         add(verticalLayout);
         add(contentLayout);
@@ -88,8 +100,8 @@ public abstract class AbstractWindow extends VerticalLayout {
         contentLayout.add(component);
     }
 
-    private void addCarouselComponent(String string, String color) {
-        list.add(new Slide(createSlideContent(string, color)));
+    private void addCarouselComponent(String string) {
+        list.add(new Slide(createSlideContent(string)));
         Slide[] arrList = new Slide[list.size()];
         for (int i = 0; i < list.size(); i++) {
             arrList[i] = list.get(i);
@@ -106,14 +118,16 @@ public abstract class AbstractWindow extends VerticalLayout {
         bool = true;
     }
 
-    private Component createSlideContent(String string, String color) {
+    private Component createSlideContent(String string) {
         H1 label = new H1(string);
         label.getStyle().set("margin-top", "auto");
         label.getStyle().set("margin-bottom", "auto");
+        label.getStyle().set("color", "white");
+        label.getStyle().set("font-size", "3vw");
         VerticalLayout vl = new VerticalLayout(label);
         vl.setAlignItems(FlexComponent.Alignment.CENTER);
         vl.setSizeFull();
-        vl.getStyle().set("background-color", color);
+        vl.getStyle().set("background-image", "linear-gradient(to top, #1676F3, #021b79)");
         return vl;
     }
 

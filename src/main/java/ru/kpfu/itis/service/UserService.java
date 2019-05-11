@@ -32,6 +32,10 @@ public class UserService {
         udao.update(login,newItem);
     }
 
+    public List<User> getSubscribed() {
+        return udao.getSubscribed();
+    }
+
     public void delete(String login) {
         udao.delete(login);
     }

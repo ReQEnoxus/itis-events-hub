@@ -6,7 +6,7 @@ import ru.kpfu.itis.entity.User;
 import ru.kpfu.itis.service.UserService;
 
 public class AuthManager {
-    private static User emptyUser = new User(null, null, null, 0, null, null, Role.GUEST);
+    private static User emptyUser = new User(null, null, null, null, null, null, false, 0, null, null, Role.GUEST);
     private static UserService userService = new UserService();
 
     public static User getCurrentUser() {

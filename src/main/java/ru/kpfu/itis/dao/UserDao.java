@@ -11,6 +11,8 @@ public interface UserDao {
 
     List<User> getAll();
 
+    List<User> getSubscribed();
+
     void create(User item);
 
     void update(String login, User newItem);

@@ -14,21 +14,43 @@ public class User {
     private List<Integer> currentEvents;
     private Role role;
     private String description;
+    private String email;
+    private String group;
     private boolean subscribed;
 
     public User(){}
 
-    public User(String name, String lastname, String patronymic, int points, String login, String password, Role role) {
+    public User(String name, String lastname, String patronymic, String email, String userinfo, String group, boolean subscribed, int points, String login, String password, Role role) {
 
         this.name = name;
         this.lastname = lastname;
+        this.email = email;
+        this.description = userinfo;
+        this.subscribed = subscribed;
         this.patronymic = patronymic;
         this.points = points;
         this.login = login;
         this.password = password;
         this.role = role;
+        this.group = group;
         accomplishedEvents = new ArrayList<>();
         currentEvents = new ArrayList<>();
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Integer> getCurrentEvents() {
@@ -126,6 +148,10 @@ public class User {
 
     @Override
     public boolean equals(Object obj) {
-        return this.login.equals(((User) obj).login);
+        if (obj instanceof User) {
+            return this.login.equals(((User) obj).login);
+        } else {
+            return super.equals(obj);
+        }
     }
 }
