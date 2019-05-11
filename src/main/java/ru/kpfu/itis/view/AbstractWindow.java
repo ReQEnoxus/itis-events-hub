@@ -70,7 +70,9 @@ public abstract class AbstractWindow extends VerticalLayout {
             } else if (tabs.getSelectedTab().equals(tab3)) {
                 UI.getCurrent().navigate("participating");
             } else if (tabs.getSelectedTab().equals(tab4)) {
-                UI.getCurrent().navigate("user/" + AuthManager.getCurrentUser().getLogin());
+                if (selectedChangeEvent.isFromClient()) {
+                    UI.getCurrent().navigate("user/" + AuthManager.getCurrentUser().getLogin());
+                }
             } else if (tabs.getSelectedTab().equals(tab5)) {
                 AuthManager.logoutUser();
                 tabs.setSelectedTab(previouslySelectedContainer.prevSelected);
