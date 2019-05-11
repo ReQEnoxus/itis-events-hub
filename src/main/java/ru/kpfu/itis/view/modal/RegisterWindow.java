@@ -16,9 +16,13 @@ import ru.kpfu.itis.entity.Role;
 import ru.kpfu.itis.entity.User;
 import ru.kpfu.itis.service.security.MD5Util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class RegisterWindow {
     public static void show() {
+        Pattern pattern = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
         Dialog dialog = new Dialog();
         dialog.setHeightFull();
         dialog.setWidth("65vw");
@@ -51,6 +55,16 @@ public class RegisterWindow {
         emailField.setRequired(true);
         emailField.setLabel("E-mail: ");
         emailField.setErrorMessage("E-mail не может быть пустым");
+        emailField.addValueChangeListener(evt -> {
+            Matcher matcher = pattern.matcher(emailField.getValue());
+            if (!matcher.matches()) {
+                emailField.setErrorMessage("Некорректный e-mail адрес");
+                emailField.setInvalid(true);
+            } else {
+                emailField.setInvalid(false);
+                emailField.setErrorMessage("E-mail не может быть пустым");
+            }
+        });
 
         PasswordField passwordField = new PasswordField();
         passwordField.setRequired(true);
@@ -95,7 +109,7 @@ public class RegisterWindow {
             String lastNameValue = lastNameField.getValue();
             String patronymicValue = patronymicField.getValue();
             String emailValue = emailField.getValue();
-            String groupValie = groupField.getValue();
+            String groupValue = groupField.getValue();
             boolean checkboxValue = subscribeCheck.getValue();
 
             if (loginValue.equals("")) {
@@ -136,7 +150,7 @@ public class RegisterWindow {
                     && !emailField.isInvalid()) {
                 try {
                     String encryptedPass = MD5Util.md5Custom(passValue);
-                    User user = new User(nameValue, lastNameValue, patronymicValue, emailValue, groupValie, null, checkboxValue, 0, loginValue, encryptedPass, Role.REGULAR);
+                    User user = new User(nameValue, lastNameValue, patronymicValue, emailValue, null, groupValue, checkboxValue, 0, loginValue, encryptedPass, Role.REGULAR);
                     AuthManager.registerUser(user);
                     dialog.close();
                     AuthManager.loginUser(user.getLogin(), user.getPassword());
@@ -160,6 +174,7 @@ public class RegisterWindow {
         formLayout.add(nameField);
         formLayout.add(lastNameField);
         formLayout.add(patronymicField);
+        formLayout.add(groupField);
         mainLayout.add(title, formLayout, span, vl);
         dialog.add(mainLayout);
 

@@ -129,6 +129,7 @@ public class EventInfo {
         volunteerGrid.removeColumnByKey("description");
         volunteerGrid.removeColumnByKey("subscribed");
         volunteerGrid.removeColumnByKey("email");
+        volunteerGrid.removeColumnByKey("group");
         volunteerGrid.addItemDoubleClickListener(user -> {
             dialog.close();
             UI.getCurrent().navigate("user/" + user.getItem().getLogin());

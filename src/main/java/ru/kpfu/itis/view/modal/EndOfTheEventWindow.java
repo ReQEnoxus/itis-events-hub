@@ -75,6 +75,7 @@ public class EndOfTheEventWindow {
                     user.setAccomplishedEvents(new ArrayList<>());
                 }
                 user.getAccomplishedEvents().add(event.getId());
+                user.getCurrentEvents().remove(Integer.valueOf(event.getId()));
                 userService.update(user.getLogin(), user);
             }
         }

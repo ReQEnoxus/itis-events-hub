@@ -85,44 +85,68 @@ public class EventCreateWindow {
         createButton.addClickListener(e -> {
             if (name.isEmpty()) {
                 name.setInvalid(true);
+            } else {
+                name.setInvalid(false);
             }
             if (place.isEmpty()) {
                 place.setInvalid(true);
+            } else {
+                place.setInvalid(false);
             }
             if (dateStart.isEmpty()) {
                 dateStart.setInvalid(true);
+            } else {
+                dateStart.setInvalid(false);
             }
             if (dateEnd.isEmpty()) {
                 dateEnd.setInvalid(true);
+            } else {
+                dateEnd.setInvalid(false);
             }
             if (timeStart.isEmpty()) {
                 timeStart.setInvalid(true);
+            } else {
+                timeStart.setInvalid(false);
             }
             if (timeEnd.isEmpty()) {
                 timeEnd.setInvalid(true);
+            } else {
+                timeEnd.setInvalid(false);
             }
             if (desc.isEmpty()) {
                 desc.setInvalid(true);
+            } else {
+                desc.setInvalid(false);
             }
             if (volunteers.isEmpty()) {
                 volunteers.setInvalid(true);
+            } else {
+                volunteers.setInvalid(false);
             }
             if (prizes.isEmpty()) {
                 prizes.setInvalid(true);
+            } else {
+                prizes.setInvalid(false);
             }
             if (!dateStart.isEmpty() && !dateEnd.isEmpty() && dateStart.getValue().isAfter(dateEnd.getValue())) {
                 timeStart.setErrorMessage("Дата начала не может быть раньше даты конца мероприятия");
                 timeEnd.setErrorMessage("Дата начала не может быть раньше даты конца мероприятия");
                 timeStart.setInvalid(true);
                 timeEnd.setInvalid(true);
+                Notification.show("Дата начала мероприятия не может быть позже даты конца", 3000, Notification.Position.TOP_END);
                 return;
+            } else {
+                timeStart.setInvalid(false);
+                timeEnd.setInvalid(false);
             }
             if (!volunteers.isEmpty() && volunteers.getValue() < 0) {
                 volunteers.setErrorMessage("Волонтеров не может быть отрицательное количество");
                 volunteers.setInvalid(true);
                 return;
+            } else {
+                volunteers.setInvalid(false);
             }
-            if (!name.isEmpty() && !place.isEmpty() && !dateStart.isEmpty() && !dateEnd.isEmpty() && !timeEnd.isEmpty() && !timeStart.isEmpty() && !desc.isEmpty() && !volunteers.isEmpty() && !prizes.isEmpty()) {
+            if (!name.isInvalid() && !place.isInvalid() && !dateStart.isInvalid() && !dateEnd.isInvalid() && !timeEnd.isInvalid() && !timeStart.isInvalid() && !desc.isInvalid() && !volunteers.isInvalid() && !prizes.isInvalid()) {
                 Event eventBeingCreated = new Event();
                 eventBeingCreated.setActive(true);
                 eventBeingCreated.setName(name.getValue());

@@ -4,6 +4,7 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import ru.kpfu.itis.auth.AuthManager;
+import ru.kpfu.itis.entity.Event;
 import ru.kpfu.itis.factory.ComponentFactoryEventUnsub;
 import ru.kpfu.itis.service.EventService;
 
@@ -22,11 +23,14 @@ public class MyEventsWindow extends AbstractWindow {
             EventService es = new EventService();
             ComponentFactoryEventUnsub unsub = new ComponentFactoryEventUnsub();
             for (int id : AuthManager.getCurrentUser().getCurrentEvents()) {
-                setContent(unsub.create(es.get(id)));
-                Label hr = new Label();
-                hr.getElement().setProperty("innerHTML", "<hr>");
-                hr.getStyle().set("width", "100%");
-                setContent(hr);
+                Event event = es.get(id);
+                if (event.isActive()) {
+                    setContent(unsub.create(event));
+                    Label hr = new Label();
+                    hr.getElement().setProperty("innerHTML", "<hr>");
+                    hr.getStyle().set("width", "100%");
+                    setContent(hr);
+                }
             }
         }
     }
