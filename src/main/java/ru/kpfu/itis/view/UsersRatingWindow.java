@@ -3,12 +3,17 @@ package ru.kpfu.itis.view;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.HeaderRow;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.StreamResource;
 import org.apache.commons.lang3.StringUtils;
+import org.vaadin.haijian.Exporter;
+import ru.kpfu.itis.auth.AuthManager;
+import ru.kpfu.itis.entity.Role;
 import ru.kpfu.itis.entity.User;
 import ru.kpfu.itis.service.UserService;
 
@@ -27,13 +32,19 @@ public class UsersRatingWindow extends AbstractWindow {
 
         Grid.Column<User> lastname = userGrid.addColumn(User::getLastname).setHeader("Фамилия");
         lastname.setSortable(true);
+        lastname.setKey("lastname");
         Grid.Column<User> name = userGrid.addColumn(User::getName).setHeader("Имя");
         name.setSortable(true);
+        name.setKey("name");
         Grid.Column<User> patronymic = userGrid.addColumn(User::getPatronymic).setHeader("Отчество");
         patronymic.setSortable(true);
+        patronymic.setKey("patronymic");
         Grid.Column<User> points = userGrid.addColumn(User::getPoints).setHeader("Баллы");
         points.setSortable(true);
+        points.setKey("points");
         Grid.Column<User> group = userGrid.addColumn(User::getGroup).setHeader("Группа");
+        group.setSortable(true);
+        group.setKey("group");
 
         HeaderRow filterRow = userGrid.appendHeaderRow();
 
@@ -91,6 +102,12 @@ public class UsersRatingWindow extends AbstractWindow {
         userGrid.addItemDoubleClickListener(user -> UI.getCurrent().navigate("user/" + user.getItem().getLogin()));
 
         //add
+        if (AuthManager.getCurrentUser().getLogin() != null) {
+            if (AuthManager.getCurrentUser().getRole().equals(Role.VERIFIED) || AuthManager.getCurrentUser().getRole().equals(Role.ADMIN)) {
+                Anchor anchor = new Anchor(new StreamResource("stats.xls", Exporter.exportAsXls(userGrid)), "Экспортировать как документ Excel");
+                setContent(anchor);
+            }
+        }
         add(userGrid);
     }
 }
