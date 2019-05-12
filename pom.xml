@@ -179,16 +179,7 @@
 
     <profiles>
         <profile>
-            <!-- Production mode can be activated with either property or profile -->
             <id>production-mode</id>
-            <activation>
-                <property>
-                    <name>vaadin.productionMode</name>
-                </property>
-            </activation>
-            <properties>
-                <vaadin.productionMode>true</vaadin.productionMode>
-            </properties>
 
             <dependencies>
                 <dependency>
@@ -214,6 +205,9 @@
                     </plugin>
                 </plugins>
             </build>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 </project>
