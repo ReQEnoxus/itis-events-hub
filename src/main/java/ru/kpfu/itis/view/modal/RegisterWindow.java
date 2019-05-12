@@ -156,6 +156,9 @@ public class RegisterWindow {
                     AuthManager.loginUser(user.getLogin(), user.getPassword());
                     UI.getCurrent().getPage().reload();
                 } catch (IllegalStateException e) {
+                    System.out.println(e.getMessage());
+                    System.out.println(e.getCause());
+                    System.out.println(e.getStackTrace());
                     loginField.setErrorMessage("Пользователь с таким логином уже зарегистрирован");
                     loginField.setInvalid(true);
                 }
