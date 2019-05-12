@@ -43,6 +43,7 @@ public abstract class AbstractWindow extends VerticalLayout {
         verticalLayout.setSpacing(false);
         verticalLayout.setPadding(false);
         contentLayout.setPadding(true);
+        contentLayout.getStyle().set("overflow-x", "auto");
         tabs = new Tabs(tab1, tab2, tab3, tab4, tab5, tab6);
         if (AuthManager.getCurrentUser().getLogin() != null) {
             tab1.setVisible(true);

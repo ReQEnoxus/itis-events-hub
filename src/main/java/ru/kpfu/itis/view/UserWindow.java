@@ -66,7 +66,7 @@ public class UserWindow extends AbstractWindow implements HasUrlParameter<String
         }
 
         pictureAndInfoLayout.add(nameAndMisc);
-        pictureAndInfoLayout.getStyle().set("overflow-y", "scroll");
+        pictureAndInfoLayout.getStyle().set("overflow-y", "auto");
 
 
         setContent(pictureAndInfoLayout);
