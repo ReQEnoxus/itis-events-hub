@@ -21,18 +21,21 @@ public class EventAPI implements RequestHandler {
     }
     @Override
     public boolean handleRequest(VaadinSession vaadinSession, VaadinRequest vaadinRequest, VaadinResponse vaadinResponse) throws IOException {
-        List<Event> events;
-        EventService es = new EventService();
+        if ("events".equals(vaadinRequest.getPathInfo())) {
+            List<Event> events;
+            EventService es = new EventService();
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        events = es.getActive();
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.enable(SerializationFeature.INDENT_OUTPUT);
+            events = es.getActive();
 
-        try {
-            String json = mapper.writeValueAsString(events);
-            vaadinResponse.getWriter().write(json);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            try {
+                String json = mapper.writeValueAsString(events);
+                vaadinResponse.getWriter().write(json);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            return true;
         }
         return false;
     }
