@@ -17,6 +17,7 @@ import java.util.List;
 @Route("event")
 public class EventAPI implements RequestHandler {
     static {
+        System.out.println("Custom handler actually registered");
         VaadinSession.getCurrent().addRequestHandler(new EventAPI());
     }
     @Override
