@@ -16,6 +16,9 @@ import java.util.List;
 
 @Route("event")
 public class EventAPI implements RequestHandler {
+    static {
+        VaadinSession.getCurrent().addRequestHandler(new EventAPI());
+    }
     @Override
     public boolean handleRequest(VaadinSession vaadinSession, VaadinRequest vaadinRequest, VaadinResponse vaadinResponse) throws IOException {
         List<Event> events;
