@@ -31,6 +31,7 @@ public class EventAPI implements RequestHandler {
 
             try {
                 String json = mapper.writeValueAsString(events);
+                vaadinResponse.setContentType("text/plain");
                 vaadinResponse.getWriter().write(json);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
