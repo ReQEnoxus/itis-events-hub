@@ -21,7 +21,7 @@ public class EventAPI implements RequestHandler {
     }
     @Override
     public boolean handleRequest(VaadinSession vaadinSession, VaadinRequest vaadinRequest, VaadinResponse vaadinResponse) throws IOException {
-        if ("events".equals(vaadinRequest.getPathInfo())) {
+        if ("/events".equals(vaadinRequest.getPathInfo())) {
             List<Event> events;
             EventService es = new EventService();
 
