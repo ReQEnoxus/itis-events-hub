@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.util.List;
 
 @Route("event")
-public class EventAPI implements RequestHandler {
+public class EventAPIRequestHandler implements RequestHandler {
     static {
         System.out.println("Custom handler actually registered");
-        VaadinSession.getCurrent().addRequestHandler(new EventAPI());
+        VaadinSession.getCurrent().addRequestHandler(new EventAPIRequestHandler());
     }
     @Override
     public boolean handleRequest(VaadinSession vaadinSession, VaadinRequest vaadinRequest, VaadinResponse vaadinResponse) throws IOException {
