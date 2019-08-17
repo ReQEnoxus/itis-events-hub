@@ -2,7 +2,6 @@ package ru.kpfu.itis.view;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEvent;
@@ -24,11 +23,10 @@ public class EventAPITest extends VerticalLayout implements HasUrlParameter<Stri
         if (s.equals("active")) {
             ObjectMapper mapper = new ObjectMapper();
             mapper.enable(SerializationFeature.INDENT_OUTPUT);
-            ObjectWriter writer = mapper.writer().withoutAttribute("participants");
             events = es.getActive();
 
             try {
-                String json = writer.writeValueAsString(events);
+                String json = mapper.writeValueAsString(events);
                 add(json);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();

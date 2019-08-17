@@ -1,11 +1,14 @@
 package ru.kpfu.itis.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Event {
     private String name;
     private String description;
+    @JsonIgnore
     private List<User> participants;
     private int prize;
     private int capacity;
